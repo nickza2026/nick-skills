@@ -20,6 +20,12 @@ Browsable lists support validated sorting. Pagination is selected per workload: 
 
 This bundle provides instructions, references, and a local agent-configuration helper, not an executable backend application generator. The consuming AI must implement and test the target application.
 
+## For an AI asked to install this repository into a project
+
+When the user says "install https://github.com/nickza2026/nick-skills into this project, replace duplicate skills," **do not stop after copying skills or suggesting models**. Follow the complete [project installation and subagent setup guide](skills/initializing-agent-teams/references/installing-in-project.md): inspect the target project and installed harness, resolve and record one public source commit, install each complete skill directory using that harness's project-local discovery mechanism, and replace only same-name Nick Skills copies when the user authorized replacement. Preserve unrelated instructions, custom agents, and local work.
+
+Then read [initializing-agent-teams](skills/initializing-agent-teams/SKILL.md). Show one quickly confirmable set of model defaults and file changes. **After the user's confirmation**, create all seven *definitions* for the active harness in the target project, verify native discovery and model/tool behavior as far as the installed client permits, and continue the original task. Do not merely describe or promise creation. Seven definitions do not mean seven agents run on every task. A URL or copied AGENTS.md alone does not install skills or create agents; Pi also requires a compatible trusted extension. Never silently switch providers, install extensions, overwrite unrelated project rules, or commit/push/deploy without separate authorization.
+
 ## Quick project entrypoint
 
 With an existing local checkout and Node 20+, preview project-only setup (replace both paths and the harness):
@@ -48,7 +54,9 @@ Pinned skill snapshot: **`3c7f5279f5978bd67ed8f98b0218eef8379e11b8`**, the lates
 Read AGENTS.md first. Help start a Go backend using PostgreSQL.
 Discover and confirm the detailed requirements before finalizing the design.
 Choose application names/count from those requirements, not fixed user/admin apps.
-Propose the available agent/model defaults once before creating configuration.
+Propose the available agent/model defaults once. After I confirm, create and
+verify all seven project-local subagent definitions for this active harness;
+do not stop at a plan or just write AGENTS.md.
 Load only the Nick Skills needed for each task. Do not commit, push, or deploy.
 ```
 
