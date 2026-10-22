@@ -13,7 +13,7 @@ Read these with an available web/HTTP tool at task start, then load only the ski
 
 ## First-use setup and execution
 
-Detect the active harness/version and actual native capabilities. Propose suitable available per-role models with quickly confirmable defaults; use parent-model inheritance when availability cannot be established. Ask once before creating agent configuration or changing models. Reuse accepted unchanged setup rather than asking again on every task. Do not install Pi extensions or change global settings automatically.
+Detect the active harness/version and actual native capabilities. Propose suitable available per-role models with quickly confirmable defaults; use parent-model inheritance when availability cannot be established. Ask once before creating agent configuration or changing models. **After I confirm, create all seven native subagent definition files for this active harness in this project and verify discovery; do not stop after proposing defaults or copying AGENTS.md.** Reuse accepted unchanged setup rather than asking again on every task. Do not install Pi extensions or change global settings automatically.
 
 Seven available roles do not mean seven running agents. Keep requirements/final integration with the parent, use at most two concurrent subagents by default, assign one writer per file, and freeze source while verification consumes it. DB/security reviewers advise without editing. Configuration generation is not proof of native activation.
 

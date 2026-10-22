@@ -11,6 +11,7 @@ Create a small reusable team, not seven running workers. Detect the active harne
 
 | Need | Reference |
 |---|---|
+| Install the whole GitHub bundle into a project, then create its native agents | [Project installation and subagent setup](references/installing-in-project.md) |
 | First-use confirmation and project startup files | [First use and entrypoints](references/first-use-and-entrypoints.md) |
 | Public GitHub instructions instead of workstation paths | [Pinned public GitHub source](references/public-github-source.md) |
 | Exact native formats and limitations | [Native adapters](references/native-adapters.md) |
@@ -24,7 +25,7 @@ Create a small reusable team, not seven running workers. Detect the active harne
 2. Verify the installed native agent schema/tool names, model choices, project trust, and instruction loading. Pi requires an already installed compatible extension plus project-agent scope/trust; do not install or enable extensions automatically. If a capability cannot be verified, disclose it and use the parent agent rather than pretending setup succeeded.
 3. Select a **Balanced** recommendation from actual accessible models: a suitable fast model for narrow scouting if available, a capable coding model/current parent for implementation, and sufficient reasoning for verification/DB/security work. Use logical `inherit` when availability cannot be established. Do not copy screenshot IDs across providers or assume the parent's plan covers another model's usage.
 4. Ask one concise confirmation showing resolved model choices, seven available roles, project-only file paths, instruction append operations, permission caveats, and limits (two concurrent subagents, one writer per file, no child spawning). Existing accepted unchanged setup should not trigger another model questionnaire. Changes/conflicts need a targeted decision, not silent replacement.
-5. Generate/review a dry-run plan with the helper below. Only after the user approves the plan and installed capabilities are verified, apply it. The approval/capability flags are caller attestations, not proof that a human approved or that a client loaded the config.
+5. Generate/review a dry-run plan with the helper below. **After the user approves**, and installed capabilities are verified, apply the plan to create the seven project-local role definitions; do not stop at model suggestions, an AGENTS.md pointer, or a dry-run. The approval/capability flags are caller attestations, not proof that a human approved or that a client loaded the config.
 6. Inspect the generated definitions and verify actual discovery/model/tool behavior using the installed client's documented UI/commands. Configuration state says `nativeVerification: pending`; the helper does not perform native activation or record success on the user's behalf. A client restart/reload may be required. Do not keep rewriting unchanged files while waiting for it.
 7. Continue the original task with on-demand delegation. The parent owns requirements/final integration; DB/security reviewers advise without editing. Freeze implementation during verification. Publish only with separate task-specific authority.
 
