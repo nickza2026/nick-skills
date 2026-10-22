@@ -5,6 +5,8 @@ description: "Prepares authorized Git commits, GitHub pushes, and pull requests 
 
 # Commit, Push, and Open a GitHub PR
 
+On first project use, follow [agent setup](../initializing-agent-teams/SKILL.md) when available. The parent asks once before configuration/model changes; delegated children do not initialize again. Missing, declined, or non-interactive setup does not block the task or force delegation.
+
 Create **one new topic branch for the delivery batch** before committing or pushing. Include other ready-to-publish changes that need to ship, even when they belong to a different task. Prefer one consolidated commit; two commits are acceptable when they make the work clearer, but keep them on the same branch. Do not split branches merely because the changes have different feature/fix labels.
 
 For example, a batch on `feat/feature-B` may also contain the ready `fix/feature-A` changes. The branch name is not a filter that excludes feature-A. This preference does not mean staging every dirty file: still exclude credentials, temporary/generated junk, unfinished work, and changes explicitly marked not for publication.
