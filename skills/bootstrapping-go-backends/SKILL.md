@@ -5,6 +5,8 @@ description: Bootstraps new Go backend repositories in Nick's style as single-mo
 
 # Bootstrap Go Backends
 
+On first project use, follow [agent setup](../initializing-agent-teams/SKILL.md) when available. The parent asks once before configuration/model changes; delegated children do not initialize again. Missing, declined, or non-interactive setup does not block the task or force delegation.
+
 Use Nick's selected structure and stack to build a repository capable of hosting multiple applications in **one Go module**. Transfer the ownership model, not the reference project's application names or business inventory. Use the bundled references without requiring access to the original repository.
 
 ## Scope and precedence

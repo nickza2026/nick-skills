@@ -5,6 +5,8 @@ description: Authors Dockerfiles and GitHub Actions workflows for Go application
 
 # Prepare Go Delivery to Nortezh
 
+On first project use, follow [agent setup](../initializing-agent-teams/SKILL.md) when available. The parent asks once before configuration/model changes; delegated children do not initialize again. Missing, declined, or non-interactive setup does not block the task or force delegation.
+
 Use the Olufy-derived delivery pattern: test the selected source revision, build a per-application image from the module root, publish to GHCR, and pass that exact image reference to Nortezh. Derive application names from the target project; do not copy the source application's identity or environment settings.
 
 ## Boundaries and inputs

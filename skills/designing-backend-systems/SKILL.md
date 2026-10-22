@@ -5,6 +5,8 @@ description: Designs backend systems and PostgreSQL databases through detailed r
 
 # Design Backend Systems and Databases
 
+On first project use, follow [agent setup](../initializing-agent-teams/SKILL.md) when available. The parent asks once before configuration/model changes; delegated children do not initialize again. Missing, declined, or non-interactive setup does not block the task or force delegation.
+
 Design **simple systems with strong data integrity, efficient access, and clear extension paths**. Prefer PostgreSQL as the authoritative store. Start from detailed requirements, not a favorite schema or framework. Add Redis caching only for a justified high-RPS access pattern with an acceptable consistency contract.
 
 ## Boundaries
