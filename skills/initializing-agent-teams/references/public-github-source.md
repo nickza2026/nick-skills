@@ -7,10 +7,12 @@ Keep a small local AGENTS.md (and Claude's CLAUDE.md import when needed), but po
 From an already reviewed local copy of the helper, preview:
 
 ```text
-node "<nick-skills>/skills/initializing-agent-teams/scripts/init-agent-team.mjs" --project "<project>" --harness cursor --github-ref "<published-40-character-commit-sha>"
+node "<nick-skills>/skills/initializing-agent-teams/scripts/init-agent-team.mjs" --project "<project>" --harness cursor --github-ref "3c7f5279f5978bd67ed8f98b0218eef8379e11b8"
 ```
 
-The generated source base is `https://raw.githubusercontent.com/nickza2026/nick-skills/<commit>`. Every README, skill, reference, asset, and relative link must resolve at that same revision. Model/tool/file approval requirements remain unchanged.
+The copy-ready example uses the published snapshot `3c7f5279f5978bd67ed8f98b0218eef8379e11b8`, the latest main revision verified when the example was updated. Its source base is `https://raw.githubusercontent.com/nickza2026/nick-skills/3c7f5279f5978bd67ed8f98b0218eef8379e11b8`. Every README, skill, reference, asset, and relative link must resolve at that same revision. Model/tool/file approval requirements remain unchanged.
+
+For setup without running a helper, copy the bundled `examples/new-project/AGENTS.md` into the target project and, for Claude, the adjacent CLAUDE.md import file. These small files instruct an agent to retrieve public guidance and ask before configuration; they do not themselves install skills, execute code, or guarantee instruction loading. Preserve existing project rules. The example is added after the pinned skill snapshot, so its files are read from the current bundle while the guidance URLs point to the prior published snapshot.
 
 Before apply, check that the **published** revision includes the README, initialization skill, required resources, and the reviewed generator/roles being used locally. Compare the renderer/contracts or use the reviewed helper from that same snapshot; a newer local generator plus an older public instructions pointer is not a coherent release. If the files are not published yet, stop rather than invent a working URL.
 
