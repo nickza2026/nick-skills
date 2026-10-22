@@ -1,0 +1,15 @@
+# Local agent state and credentials must never enter the public skill bundle.
+.letta/
+.env
+.env.*
+!.env.example
+s.env
+*.pem
+*.key
+credentials*.json
+service-account*.json
+
+# Generated distribution / smoke-test output.
+dist/
+.scratch/
+node_modules/
