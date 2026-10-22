@@ -32,7 +32,33 @@ This is dry-run by default. After confirming the displayed plan/models and insta
 
 The helper creates a small AGENTS.md entrypoint, a CLAUDE.md import for Claude, seven native role definitions, and a per-harness manifest. It does not launch agents or switch the running model. A linked checkout must remain accessible; shared/offline portability needs an agreed vendoring or checkout strategy. Native startup loading varies, and Letta automatic injection is not established by merely creating AGENTS.md. See [first-use details](skills/initializing-agent-teams/references/first-use-and-entrypoints.md).
 
-To point project instructions to **public GitHub** instead of a workstation path, add `--github-ref "<published-40-character-commit-sha>"`. Every resource is pinned to that revision; apply also requires `--github-source-confirmed` after checking that published files exist and match the reviewed renderer/contracts. The helper does no fetching or remote execution, and a URL is not guaranteed to auto-import in every client. See [public GitHub mode](skills/initializing-agent-teams/references/public-github-source.md). New local features are unavailable through GitHub until separately published.
+To point project instructions to **public GitHub** instead of a workstation path, add `--github-ref "3c7f5279f5978bd67ed8f98b0218eef8379e11b8"` for the published snapshot used below. Every resource is pinned to that revision; apply also requires `--github-source-confirmed` after checking that published files exist and match the reviewed renderer/contracts. The helper does no fetching or remote execution, and a URL is not guaranteed to auto-import in every client. See [public GitHub mode](skills/initializing-agent-teams/references/public-github-source.md). New local features are unavailable through GitHub until separately published.
+
+## Copy-ready new-project example
+
+Pinned skill snapshot: **`3c7f5279f5978bd67ed8f98b0218eef8379e11b8`**, the latest published main revision verified when this example was updated. This is a real source commit, not a placeholder. The later documentation commit intentionally has a different SHA; do not make a document attempt to contain its own commit hash. Upgrade this pin deliberately when choosing a newer skill snapshot, not automatically on each chat.
+
+1. Create/open the intended project folder, for example `D:\works\my-api`.
+2. Copy [examples/new-project/AGENTS.md](examples/new-project/AGENTS.md) into that project's root. It already contains public raw-GitHub URLs with the pinned SHA; no local Nick Skills checkout path is embedded.
+3. For Claude Code, also copy [examples/new-project/CLAUDE.md](examples/new-project/CLAUDE.md) next to it. Its `@AGENTS.md` import loads the shared project instructions subject to the installed client's normal import behavior. Preserve existing instruction files; append/integrate with approval rather than overwriting them with an example.
+4. Open a fresh session in that project and verify the instructions were loaded. Cursor/Codex/Pi instruction discovery has cwd/version/override limits. For Letta, explicitly ask it to read AGENTS.md until loading is confirmed; merely copying the file is not a universal auto-loader.
+5. Give the AI this starting request, then confirm its actual available model/configuration defaults once:
+
+```text
+Read AGENTS.md first. Help start a Go backend using PostgreSQL.
+Discover and confirm the detailed requirements before finalizing the design.
+Choose application names/count from those requirements, not fixed user/admin apps.
+Propose the available agent/model defaults once before creating configuration.
+Load only the Nick Skills needed for each task. Do not commit, push, or deploy.
+```
+
+Direct bootstrap URL for the copy-ready example:
+
+```text
+https://raw.githubusercontent.com/nickza2026/nick-skills/3c7f5279f5978bd67ed8f98b0218eef8379e11b8/skills/initializing-agent-teams/SKILL.md
+```
+
+An agent still needs approved web/HTTP access (or an approved same-commit cache). Copying these instruction files does not fetch/execute code, launch agents, configure models, or establish native activation by itself.
 
 ## Use with an AI
 
