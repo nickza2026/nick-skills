@@ -1,0 +1,9 @@
+{
+  "scout": "medium",
+  "implementer": "medium",
+  "verifier": "high",
+  "advisor": "high",
+  "git-publisher": "medium",
+  "db-reviewer": "low",
+  "security-reviewer": "high"
+}
