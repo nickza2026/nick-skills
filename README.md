@@ -28,6 +28,8 @@ Then read [initializing-agent-teams](skills/initializing-agent-teams/SKILL.md). 
 
 ## Quick project entrypoint
 
+For a **Codex CLI** example based on a seven-role screenshot, see [Codex and Letta-with-Codex roles](skills/initializing-agent-teams/references/codex-model-example.md). For **Cursor**, the advisor, DB reviewer, and security reviewer [recommend Opus 5.5 with high reasoning](skills/initializing-agent-teams/references/cursor-model-example.md) after validating its actual model ID. These are proposals, not verified model availability. Codex TOML can carry a per-role reasoning effort after confirmation; Letta project agents using a Codex model handle have a different schema and no verified per-agent effort field.
+
 With an existing local checkout and Node 20+, preview project-only setup (replace both paths and the harness):
 
 ```text
