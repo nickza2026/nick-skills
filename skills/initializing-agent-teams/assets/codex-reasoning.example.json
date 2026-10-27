@@ -4,6 +4,6 @@
   "verifier": "high",
   "advisor": "high",
   "git-publisher": "medium",
-  "db-reviewer": "low",
+  "db-reviewer": "high",
   "security-reviewer": "high"
 }

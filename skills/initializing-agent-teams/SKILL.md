@@ -17,6 +17,7 @@ Create a small reusable team, not seven running workers. Detect the active harne
 | Exact native formats and limitations | [Native adapters](references/native-adapters.md) |
 | Seven role contracts, delegation, and model defaults | [Roles and models](references/roles-and-models.md), [canonical contracts](assets/roles.json) |
 | Codex example from a role/model/reasoning screenshot | [Codex and Letta-with-Codex example](references/codex-model-example.md) |
+| Cursor advisor/DB/security model preference | [Cursor Opus 5.5 high example](references/cursor-model-example.md) |
 | Evidence/version boundaries | [Source baseline](references/source-baseline.md) |
 | Verification cases | [Acceptance scenarios](references/acceptance-scenarios.md) |
 

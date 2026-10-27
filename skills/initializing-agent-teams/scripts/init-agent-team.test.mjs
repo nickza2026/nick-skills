@@ -138,6 +138,35 @@ test('Codex optional per-role reasoning emits only confirmed TOML fields', () =>
   assert.deepEqual(fs.readdirSync(root), []);
 }));
 
+test('Codex example recommends Astra with high reasoning for advisor, DB, and security', () => project(root => {
+  const assets = path.resolve(path.dirname(script), '../assets/codex-reasoning.example.json');
+  const guide = path.resolve(path.dirname(script), '../references/codex-model-example.md');
+  const reasoning = JSON.parse(fs.readFileSync(assets, 'utf8'));
+  const text = fs.readFileSync(guide, 'utf8');
+  for (const role of ['advisor', 'db-reviewer', 'security-reviewer']) {
+    assert.equal(reasoning[role], 'high');
+    assert.ok(text.includes(`| \`${role}\` | GPT-6 Astra | high |`));
+  }
+  assert.deepEqual(fs.readdirSync(root), []);
+}));
+
+test('Cursor example recommends Opus 5.5 high for advisory roles only', () => project(root => {
+  const guide = path.resolve(path.dirname(script), '../references/cursor-model-example.md');
+  const text = fs.readFileSync(guide, 'utf8');
+  for (const role of ['advisor', 'db-reviewer', 'security-reviewer']) {
+    assert.ok(text.includes(`| \`${role}\` | Opus 5.5 | high |`));
+  }
+  const model = 'fixture/cursor-opus-5.5[effort=high]';
+  const plan = makePlan(options(root, 'cursor', { models: Object.fromEntries(['advisor', 'db-reviewer', 'security-reviewer'].map(role => [role, model])) }));
+  for (const role of ['advisor', 'db-reviewer', 'security-reviewer']) {
+    const file = plan.files.find(item => item.relative.endsWith(`nick-${role}.md`));
+    assert.ok(file.content.includes(`model: "${model}"`));
+    assert.ok(file.content.includes('readonly: true'));
+  }
+  assert.ok(plan.files.find(file => file.relative.endsWith('nick-scout.md')).content.includes('model: "inherit"'));
+  assert.deepEqual(fs.readdirSync(root), []);
+}));
+
 test('non-Codex adapters and unsupported efforts reject reasoning without writes', () => project(root => {
   for (const harness of ['cursor', 'claude', 'letta', 'pi']) {
     assert.throws(() => makePlan(options(root, harness, { reasoning: { scout: 'medium' } })), /Codex adapter/);

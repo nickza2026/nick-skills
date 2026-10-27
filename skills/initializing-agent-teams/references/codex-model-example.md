@@ -1,6 +1,6 @@
 # Example: Codex roles and reasoning
 
-This **illustrative mapping** came from a user-provided Cursor screenshot, not from a verified catalog or a measured optimum. Display names in the screenshot are **not universal model handles**. Before choosing a model, check the active harness, the account's accessible catalog, the exact wire ID, reasoning support for that ID, and cost/permissions; ask once with quickly confirmable defaults. Use `inherit` when an ID or effort cannot be verified. Never silently change providers or global model settings.
+This **illustrative mapping** was adapted from a user-provided screenshot; the user later requested **high** reasoning for the Codex advisor, DB reviewer, and security reviewer. It is not a verified catalog or a measured optimum. Display names in the screenshot are **not universal model handles**. Before choosing a model, check the active harness, the account's accessible catalog, the exact wire ID, reasoning support for that ID, and cost/permissions; ask once with quickly confirmable defaults. Use `inherit` when an ID or effort cannot be verified. Never silently change providers or global model settings.
 
 | Role | Screenshot display-name example | Reasoning example |
 |---|---|---|
@@ -9,10 +9,10 @@ This **illustrative mapping** came from a user-provided Cursor screenshot, not f
 | `verifier` | GPT-6.1 Sol | high |
 | `advisor` | GPT-6 Astra | high |
 | `git-publisher` | GPT-5.3 Codex Spark | medium |
-| `db-reviewer` | GPT-6 Astra | low |
+| `db-reviewer` | GPT-6 Astra | high |
 | `security-reviewer` | GPT-6 Astra | high |
 
-These are **role proposals**, not an instruction to run seven agents or to hardcode the screenshot's names. For financial/security/ambiguous DB work, confirm the chosen reasoning level is sufficient rather than assuming the example is universally safe. A lighter scout or DB review is a cost/latency choice to validate against actual task quality, not a hard guarantee.
+These are **role proposals**, not an instruction to run seven agents or to hardcode the screenshot's names. For financial/security/ambiguous DB work, confirm the chosen reasoning level is sufficient rather than assuming the example is universally safe. A lighter scout is a cost/latency choice to validate against actual task quality, not a hard guarantee.
 
 ## When Codex CLI is the active harness
 
