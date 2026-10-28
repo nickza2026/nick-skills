@@ -28,6 +28,21 @@ test('exactly seven distinct prefixed backend roles, including DB/security', () 
   assert.equal(roles.find(role => role.id === 'security-reviewer').access, 'read');
 });
 
+test('all adapters carry FE handoff duties without giving verifier write authority', () => project(root => {
+  for (const harness of ['cursor', 'codex', 'claude', 'letta', 'pi']) {
+    const plan = makePlan(options(root, harness));
+    const implementation = plan.files.find(file => file.relative.includes('nick-implementer.')).content;
+    const verification = plan.files.find(file => file.relative.includes('nick-verifier.')).content;
+    assert.ok(implementation.includes('documenting-frontend-api-handoffs'));
+    assert.ok(implementation.includes('request, response, and error examples'));
+    assert.ok(implementation.includes('coordinate doc file ownership'));
+    assert.ok(verification.includes('check the FE Markdown covers every affected route'));
+    assert.ok(verification.includes('report gaps, do not implement frontend UI'));
+    assert.ok(verification.includes('Do not edit implementation'));
+  }
+  assert.deepEqual(fs.readdirSync(root), []);
+}));
+
 for (const harness of ['cursor', 'codex', 'claude', 'letta', 'pi']) {
   test(`${harness}: dry-run renders selected adapter only and writes nothing`, () => project(root => {
     const plan = makePlan(options(root, harness));
