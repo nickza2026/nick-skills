@@ -25,7 +25,7 @@ This question controls **automatic GitHub PR test execution**, not whether the a
 
 ## 2. Establish Nortezh destinations and propose names
 
-Ask **project** and **location** per environment (or confirm explicitly that they are shared). Never copy `example-staging`, `example-production`, or `olufy-0` merely because they appear in a sample.
+Ask **project** and **location** per environment (or confirm explicitly that they are shared). Never copy a reference project's real deployment identifiers merely because they appear in a sample.
 
 Propose a **deployment name** for every app/environment, derived from the target project, e.g. `<project>-<app>-api` for production and `<project>-<app>-api-stg` for staging. These strings are naming suggestions, not confirmed existing targets. Ask if the proposed names are OK and whether each target already exists or its creation is intended. Resolve collisions before writing; a mistaken name may create a new deployment on a live run.
 

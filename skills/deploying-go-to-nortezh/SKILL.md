@@ -24,11 +24,13 @@ Use the **standalone workflow layout in the supplied examples**: one full `.gith
 
 Identify actual `cmd/<app>` applications, HTTP/Worker role, module-compatible Go version, Docker paths/context, runtime assets, Swagger needs, and migration ownership/order. Do not force user/admin apps. Read [delivery contracts](references/delivery-contracts.md) and [the source baseline](references/source-baseline.md), including deliberate limits of the exact example pattern.
 
-Show the confirmation table from the first-use reference. Recommend concrete names from the target repository/app/environment, clearly marked as proposals, not existing Nortezh targets. Resolve all required rows before creating files. Keep `workflows-example/` read-only when supplied; it is a source reference, not a live deployment directory.
+Show the confirmation table from the first-use reference. Recommend concrete names from the target repository/app/environment, clearly marked as proposals, not existing Nortezh targets. Resolve all required rows before creating files. User-supplied workflows/Dockerfiles are reference-only inputs: do not include raw reference directories in a commit/push without explicit permission to publish those artifacts. Use synthetic examples bundled inside the skill instead.
 
 ### 2. Prepare approved container inputs
 
-If Dockerfiles are missing and container authoring is approved, create `build/<app>/Dockerfile` from [the base template](assets/Dockerfile.tmpl), replacing `__APP__` and `__GO_VERSION__`. Inspect/merge [context exclusions](assets/dockerignore.tmpl) without erasing existing rules. Adapt CGO, architecture, Swagger generation, and runtime asset copies deliberately. Do not copy `.env`, secrets, test databases, or all source files into the runtime image.
+Read [the complete Dockerfile examples](references/dockerfile-examples.md) **before** creating container files. Use the [API + Swagger example](assets/dockerfiles/api-swagger.Dockerfile.example) when generated imports require it, the [Worker example](assets/dockerfiles/worker.Dockerfile.example) for non-HTTP processes, or [the minimal template](assets/Dockerfile.tmpl) when neither generator nor special assets are needed. App names are synthetic, not required applications.
+
+If container authoring is approved, materialize the matching file at `build/<app>/Dockerfile`, using the actual app paths, module-compatible Go version, Swagger output/instance, binary/entrypoint, confirmed port, and required runtime asset copies. Inspect/merge [context exclusions](assets/dockerignore.tmpl) without erasing rules. Never copy `.env`, credentials, test databases, or all source into runtime; `EXPOSE` alone does not configure the app/platform port. Report unsupported CGO/runtime requirements instead of guessing.
 
 ### 3. Preview, confirm, then create full workflows
 
@@ -51,7 +53,7 @@ The helper renders one **complete** workflow per row; `--approved` attests to pr
 ### 4. Validate and report separate evidence layers
 
 - Reconcile generated files with the confirmed matrix and examples: exact two-job wiring, all selected environments/apps, correct branch/release/manual triggers, paths, secrets, targets, image names, type, and confirmed port behavior. Do not leave template tokens or copy Olufy identities into a different project.
-- Run `node --test "<skill>/scripts/render-workflows.test.mjs"`; golden tests match all three supplied examples after LF normalization. Parse generated YAML and use actionlint when available. Parsing/text tests do not prove runner/action compatibility or a successful deployment.
+- Run `node --test "<skill>/scripts/render-workflows.test.mjs" "<skill>/scripts/dockerfile-examples.test.mjs"`; synthetic golden fixtures preserve the supplied workflow structure without publishing raw references. Parse generated YAML and use actionlint when available. Parsing/text/compiler-only checks do not prove external Swagger generation, an image build, runner/action compatibility, or successful deployment.
 - Inspect commands/tests and side effects before execution. Complete relevant safe target-project tests; use isolated synthetic DB/provider configuration. Do not add a new verification job or change action versions silently to satisfy this check.
 - Build/smoke-test the actual image/context when Docker is available and authorized. Otherwise report blocked/unrun layers. Workflow generation is not an executed GitHub run, published image, configured Nortezh target, or healthy revision.
 - Report created `.github/workflows/...` paths, confirmed branch/target matrix, checks, missing secret configuration by **name**, and remaining blockers. Do not commit/push/deploy without separate authorization.

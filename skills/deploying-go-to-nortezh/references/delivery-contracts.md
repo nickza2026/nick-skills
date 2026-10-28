@@ -43,6 +43,8 @@ Never request/print the secret values or grant a browser privileged provider cre
 
 ## Containers, schema, and assets
 
+Read [the complete Dockerfile examples](dockerfile-examples.md) and choose API + Swagger, Worker, or the minimal no-generator template before materializing `build/<app>/Dockerfile`. Their synthetic app names, Go image version, and ports are not approved target configuration. Keep reference-only inputs out of publication unless explicitly authorized.
+
 Build from one module root using `build/<app>/Dockerfile`; choose actual app names and module-compatible Go versions. The Docker template cross-compiles CGO-free code for the target platform and uses a non-root distroless runtime. If CGO/platform/runtime assets require something different, propose it. A successful Go binary build does not prove external templates/assets were copied or that non-root permissions are correct.
 
 When generated Swagger imports are required, use a verified pinned generator before compilation, e.g. `github.com/swaggo/swag/cmd/swag@v1.16.6` with the correct `cmd/<app>/main.go`, output directory, and instance name. Workers do not need Swagger for symmetry. If approved separate tests compile generated imports, generate there too, not only inside Docker.
@@ -51,7 +53,7 @@ Review `.dockerignore` and explicitly copy only required non-secret runtime asse
 
 ## Validation and rollout evidence
 
-Run renderer regressions and parse generated YAML; use actionlint if available. Node tests include normalized golden hashes of all three user examples, policy variations, actual isolated CLI file creation, and no-overwrite/path guards. This is text/file behavior, not action execution or an image build. The helper's approval flag is an attestation, not a consent/security boundary; use stable trusted projects without hostile concurrent filesystem edits.
+Run renderer regressions and parse generated YAML; use actionlint if available. Node tests include sanitized golden hashes and explicit action-order/output assertions, policy variations, actual isolated CLI file creation, and no-overwrite/path guards. Raw user examples are not required or published. Dockerfile checks cover build/output/entrypoint/Swagger layout and compile synthetic entrypoints with an available local Go toolchain; they do not execute the external Swagger generator or Docker build/runtime. The helper's approval flag is an attestation, not a consent/security boundary; use stable trusted projects without hostile concurrent filesystem edits.
 
 Inspect tests/scripts before running them. Keep checks isolated from production/shared DBs, real money/credits, and live providers. Build/smoke-test containers only within authorized scope. After a separately approved live deployment, verify the actual image/revision, pull access, configuration, health/logs, and safe application behavior. Nortezh may create a target if its name is absent; never treat an API revision/public URL as readiness proof.
 

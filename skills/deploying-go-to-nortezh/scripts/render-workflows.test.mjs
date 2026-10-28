@@ -16,7 +16,7 @@ const entry = (app = 'catalog', environment = 'production', kind = 'push') => ({
   app, environment, imageSuffix: `${app}-${environment}`, outputId: `${app}_api`, dockerfile: `./build/${app}/Dockerfile`,
   trigger: { kind, ...kind === 'push' ? { branch: 'main' } : {}, manual: kind !== 'release' },
   ...kind === 'push' ? { paths: [`.github/workflows/${app}-${environment === 'production' ? 'prod' : environment}.yaml`, `${app}/**`, `build/${app}/**`, 'pkg/**', `cmd/${app}/**`, 'go.mod', 'go.sum'] } : {},
-  nortezh: { project: environment === 'production' ? 'example-production' : 'example-staging', location: 'olufy-0', name: `${app}-api`, type: 'WebService' },
+  nortezh: { project: environment === 'production' ? 'example-production' : 'example-staging', location: 'example-0', name: `${app}-api`, type: 'WebService' },
   secrets: { email: environment === 'production' ? 'NTZ_SVA_EMAIL_PROD' : 'NTZ_SVA_EMAIL', key: environment === 'production' ? 'NTZ_SVA_KEY_PROD' : 'NTZ_SVA_KEY' },
 });
 function project(fn) {
@@ -35,14 +35,14 @@ function prepare(root, entries) {
   }
 }
 
-const admin = entry('admin', 'staging'); admin.nortezh.name = 'example-admin-service-stg';
-const user = entry('user', 'production', 'release'); user.nortezh.name = 'example-customer-service';
-const worker = entry('worker', 'staging'); worker.name = 'Deploy Worker To Staging'; worker.outputId = 'worker'; worker.paths.splice(1, 1); worker.nortezh = { ...worker.nortezh, name: 'example-worker-service-stg', type: 'Worker' };
-export const goldenEntries = [admin, user, worker];
+const apiStaging = entry('catalog', 'staging'); apiStaging.nortezh.name = 'example-catalog-api-stg';
+const apiProduction = entry('catalog', 'production', 'release'); apiProduction.nortezh.name = 'example-catalog-api';
+const worker = entry('processor', 'staging'); worker.name = 'Deploy Processor To Staging'; worker.outputId = 'processor'; worker.paths.splice(1, 1); worker.nortezh = { ...worker.nortezh, name: 'example-processor-stg', type: 'Worker' };
+const goldenEntries = [apiStaging, apiProduction, worker];
 const goldens = [
-  ['admin-staging.yaml', admin, 'ff04c987c3a9b0ed73a4c18aa7ce42d5b5d4a0ef72c80e0a78bfe104bc7c1c55'],
-  ['user-prod.yaml', user, '6cc521d3fd5aa074d4d3a9b5d6e1a4a835974dc94daf4e4a344824ff2c62a956'],
-  ['worker-staging.yaml', worker, '545221a28039a4d12000719096b358bfd3abf6661064a1c126a777a2344a65d1'],
+  ['catalog-staging.yaml', apiStaging, 'c798fce076a65750a634f6842ef8e8b663878f923ff40c1e626f28a9a6b29b66'],
+  ['catalog-prod.yaml', apiProduction, '8ea91849d7c6397e21c98b4b8dfd844e2742cf7ba0d29c6274935c283f7a4929'],
+  ['processor-staging.yaml', worker, 'b9cd7e495d7ac972a7f65aa56af4cf987a60ab3a4a39cb06df837a15976836c0'],
 ];
 test('first-use instructions require an explicit PR-test CI decision; templates never enable it by default', () => {
   const firstUse = fs.readFileSync(new URL('../references/first-use-and-confirmation.md', import.meta.url), 'utf8');
@@ -54,9 +54,21 @@ test('first-use instructions require an explicit PR-test CI decision; templates 
     assert.doesNotMatch(renderWorkflows({ workflows: [item] })[0].content, /^  pull_request(?:_target)?:/m);
   }
 });
-for (const [filename, item, expected] of goldens) test(`golden: ${filename} exactly matches supplied example (LF normalized)`, () => {
+for (const [filename, item, expected] of goldens) test(`golden: ${filename} matches the sanitized portable workflow shape`, () => {
   const result = renderWorkflows({ workflows: [item] })[0];
   assert.equal(createHash('sha256').update(result.content).digest('hex'), expected);
+});
+
+test('synthetic golden fixtures preserve the approved action order and output wiring', () => {
+  for (const item of goldenEntries) {
+    const content = renderWorkflows({ workflows: [item] })[0].content;
+    const uses = [...content.matchAll(/^\s+- uses: ([^\n]+)|^\s+uses: ([^\n]+)/gm)].map(match => match[1] ?? match[2]);
+    assert.deepEqual(uses, ['actions/checkout@v3', 'docker/setup-qemu-action@v2', 'docker/setup-buildx-action@v2', 'docker/login-action@v2', 'ASzc/change-string-case-action@v5', 'docker/build-push-action@v4', 'Nortezh/nortezh-action@v1.0.5']);
+    assert.deepEqual([...content.matchAll(/^  ([a-z_]+):$/gm)].map(match => match[1]).filter(name => !['workflow_dispatch', 'push', 'release'].includes(name)), ['dockerize_n_push', 'deploy']);
+    assert.ok(content.includes('image: ${{ needs.dockerize_n_push.outputs.image_name }}'));
+    assert.ok(content.includes(`image_name: \${{ steps.${item.outputId}.outputs.image_name}}`));
+    assert.doesNotMatch(content, /olufy-|workflows-example\//);
+  }
 });
 
 test('prod-only, staging-only, and additional environments have no hardcoded trigger policy', () => {

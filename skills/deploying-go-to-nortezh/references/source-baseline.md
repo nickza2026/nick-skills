@@ -2,15 +2,15 @@
 
 ## Current workflow authority
 
-On 2026-10-28 the user supplied `workflows-example/admin-staging.yaml`, `user-prod.yaml`, and `worker-staging.yaml` in the Nick Skills repository and explicitly requested this exact workflow shape. These **supersede** the previous reusable-workflow redesign. The source files remain read-only user artifacts; installed skills need no access to them because the portable template and normalized golden regressions carry the pattern.
+On 2026-10-28 the user supplied three local reference workflows and requested their standalone two-job shape instead of the previous reusable-workflow redesign. Later they explicitly requested removal of the raw reference directory and addition of Dockerfile examples inside the skill. Reference inputs are not publication deliverables; do not restore or re-upload the deleted raw files.
 
-| Example | Event | Target | Normalized SHA-256 (LF + one trailing newline) |
-|---|---|---|---|
-| admin-staging.yaml | manual + main push with paths | WebService | `ff04c987c3a9b0ed73a4c18aa7ce42d5b5d4a0ef72c80e0a78bfe104bc7c1c55` |
-| user-prod.yaml | release published | WebService | `6cc521d3fd5aa074d4d3a9b5d6e1a4a835974dc94daf4e4a344824ff2c62a956` |
-| worker-staging.yaml | manual + main push with paths | Worker | `545221a28039a4d12000719096b358bfd3abf6661064a1c126a777a2344a65d1` |
+The portable workflow template and **synthetic** golden fixtures preserve step order/action tags, two-job output wiring, secret-name mapping, short-SHA tags, and optional port behavior. Fixtures use `catalog`/`processor`, `example-production`/`example-staging`, and `example-0`, not the reference system's real destinations. Event/branch choices remain proposals to confirm, not forced production/staging defaults.
 
-The renderer's fixtures reproduce these exact contents after newline normalization, including step order/action tags, two-job output wiring, secret references, short-SHA tags, and whether `port` is omitted. Concrete app names, Nortezh identities, secret names, and branch/event choices remain **examples**, not new-project defaults. The approved target configuration determines those values.
+Golden hashes now describe these sanitized fixtures; they no longer claim byte equality to the original private/project-specific inputs. Explicit action-order/output tests protect the approved shape without needing raw files. Deletion from the current tree does not remove already-published historical blobs; history rewriting and its impact require separate approval and cannot guarantee deletion of other clones/caches.
+
+## Portable Dockerfile examples
+
+Read [Dockerfile examples](dockerfile-examples.md) for complete generic API + Swagger and Worker assets, matching workflow build context, output/entrypoint paths, runtime assets, and ports. They adapt the reference's root-module/multi-stage/distroless approach with pinned host-native Swagger generation and an explicit non-root runtime. Example Go image versions/app names are illustrative; inspect and confirm the actual target requirements before generating Dockerfiles.
 
 ## Earlier evidence retained only where applicable
 
@@ -20,4 +20,4 @@ The renderer's fixtures reproduce these exact contents after newline normalizati
 
 ## Verification boundaries
 
-Golden/renderer/YAML checks establish static fidelity and project-local file creation only. They do not validate account credentials, action availability, GHCR publication/pulls, protected environments, Docker builds, GitHub runs, or Nortezh deployments. Preserve Docker non-root/runtime/asset considerations without claiming the example pipeline implements gates that it does not contain.
+Golden/renderer/YAML checks establish static fidelity and project-local file creation only. Dockerfile static checks and local compilation of synthetic Go entrypoints do not execute external Swagger generation, Docker image construction, or runtime asset reads. No example test validates account credentials, action availability, GHCR publication/pulls, protected environments, GitHub runs, or Nortezh deployments.

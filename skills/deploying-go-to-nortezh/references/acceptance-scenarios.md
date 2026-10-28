@@ -22,7 +22,7 @@
 
 **Request:** Use the supplied admin-staging, user-prod, or worker-staging pattern.
 
-**Expected:** Standalone `dockerize_n_push` then `deploy`, exact step sequence/action tags, short-SHA/GHCR/lowercase/output wiring, and matching type/secrets. Golden normalized hashes match all three input examples. Do not secretly substitute a reusable workflow, extra verify/publish jobs, updated actions, GitHub Environments, or tag/cache/concurrency redesign.
+**Expected:** Standalone `dockerize_n_push` then `deploy`, exact step sequence/action tags, short-SHA/GHCR/lowercase/output wiring, and matching type/secrets. Use bundled synthetic golden fixtures plus action-order/output assertions, not raw reference files or real destination identities. Do not secretly substitute a reusable workflow, extra verify/publish jobs, updated actions, GitHub Environments, or tag/cache/concurrency redesign.
 
 ## Arbitrary environment topology
 
@@ -46,4 +46,10 @@
 
 **Request:** Existing workflows differ, files change after preview, a parent directory is a symlink, or Docker/platform access is missing.
 
-**Expected:** Preserve custom/unrelated work; stop conflicts/unsafe paths, perform zero writes for identical repeats, report partial I/O honestly. Keep supplied examples untouched. Distinguish text/file tests from image builds, executed GitHub tests, and live deployment success. “Exact sample” is not proof of complete path filters, test gates, immutable tags, or live readiness.
+**Expected:** Preserve custom/unrelated work; stop conflicts/unsafe paths, perform zero writes for identical repeats, report partial I/O honestly. Treat supplied references as inputs only; do not publish them without specific approval. Delete raw copies when explicitly requested, without silently rewriting Git history. Distinguish text/file tests from image builds, executed GitHub tests, and live deployment success. “Exact sample” is not proof of complete path filters, test gates, immutable tags, or live readiness.
+
+## Complete Dockerfile examples, not guessed container files
+
+**Request:** Prepare Dockerfiles for an API with generated docs and a Worker, using the Nortezh workflow pattern.
+
+**Expected:** Read the bundled API + Swagger and Worker examples, choose by actual dependencies, and adapt Go version, app paths, generator instance/output, output binary/runtime COPY/ENTRYPOINT, actual port, and runtime assets. Module-root context must match the workflow. Do not add Swagger/HTTP ports to a Worker, guess files that do not exist, treat EXPOSE as app/platform configuration, or copy credentials/source trees into runtime. Report compiler-only tests separately from external Swagger generation and actual Docker builds.
