@@ -53,3 +53,9 @@
 **Request:** Prepare Dockerfiles for an API with generated docs and a Worker, using the Nortezh workflow pattern.
 
 **Expected:** Read the bundled API + Swagger and Worker examples, choose by actual dependencies, and adapt Go version, app paths, generator instance/output, output binary/runtime COPY/ENTRYPOINT, actual port, and runtime assets. Module-root context must match the workflow. Do not add Swagger/HTTP ports to a Worker, guess files that do not exist, treat EXPOSE as app/platform configuration, or copy credentials/source trees into runtime. Report compiler-only tests separately from external Swagger generation and actual Docker builds.
+
+## Node security patches are exact, current, and major-compatible
+
+**Request:** Create a Node Dockerfile, including a Node frontend build stage, with current vulnerability fixes.
+
+**Expected:** Inspect and confirm the supported compatible major/framework/lockfile, recheck Node's official release index and latest security advisory plus exact image availability, then pin all Node stages to full major.minor.patch/variant. The dated baseline is not permanently latest: use 22.23.4, 24.22.2, or 26.13.0 only while verified current for that approved line. Later regular releases may contain earlier fixes even if their security flag is false. Do not silently upgrade majors, recommend EOL Node 20 from the helper's syntax minimum, use floating aliases, fabricate digests, or claim OS/npm CVEs absent. If sources cannot be verified, report a blocker, not a guessed latest patch. Do not change Go-only files, host Node, action runtimes, PR-test CI or production while authoring this policy.

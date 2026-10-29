@@ -12,6 +12,8 @@ Golden hashes now describe these sanitized fixtures; they no longer claim byte e
 
 Read [Dockerfile examples](dockerfile-examples.md) for complete generic API + Swagger and Worker assets, matching workflow build context, output/entrypoint paths, runtime assets, and ports. They adapt the reference's root-module/multi-stage/distroless approach with pinned host-native Swagger generation and an explicit non-root runtime. Example Go image versions/app names are illustrative; inspect and confirm the actual target requirements before generating Dockerfiles.
 
+For Node stages, [the dated security baseline](../assets/node-security-baseline.json) records official Node release/security/support and Docker tag evidence inspected on 2026-10-29. Read [Node security pinning](node-security-pinning.md) before using the optional npm service example; reverify current patches within the approved major rather than applying Go paths or treating this snapshot as perpetually latest.
+
 ## Earlier evidence retained only where applicable
 
 - Olufy-API commit `01731b564d56dfb72755fe9421515aafc894b3dc`, inspected read-only on 2026-10-22, informed the per-app Dockerfiles and root-module build approach.
