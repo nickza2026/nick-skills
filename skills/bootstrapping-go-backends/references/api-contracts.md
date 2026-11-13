@@ -69,7 +69,7 @@ Select pagination per endpoint and workload using [pagination and sorting](pagin
 
 ## Specifications and integration handoff
 
-For each new/modified frontend-facing endpoint, create or update a `.md` using [documenting-frontend-api-handoffs](../../documenting-frontend-api-handoffs/SKILL.md), with a complete changed-route inventory and before/after adoption notes. Include request/response and error examples verified against actual runtime-facing code; omit SQL/migrations, backend internals, deployment commands, and backend test/commit history. Do not mistake a Swagger update for the FE handoff.
+For each affected frontend-facing endpoint in the current task, create/update a `.md` using [documenting-frontend-api-handoffs](../../documenting-frontend-api-handoffs/SKILL.md). Include verified request/response fields, errors and necessary client constraints; keep adoption notes only for relevant changes to the same existing contract. Omit unrelated legacy comparisons, reuse provenance, irrelevant exclusions and UI prescriptions as well as backend internals/setup/test history. Optional usage examples stay brief. Swagger alone does not replace the handoff.
 
 Inspect validation, serialization, route registration, and permission checks before documenting behavior. Generate a specification per exposed API application; a worker does not need a Swagger document merely for symmetry.
 

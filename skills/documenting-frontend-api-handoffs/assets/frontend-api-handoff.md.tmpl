@@ -1,16 +1,14 @@
 # {{FEATURE_TITLE}} — Frontend API handoff
 
-Author this handoff in the target project's language (Thai for Nick's Thai FE workflow). Replace every placeholder, repeat the endpoint section for every affected route, and remove these author instructions before delivery. Preserve exact wire keys/codes. Do not include backend implementation notes.
+Author in the target project's language (Thai for Nick's Thai FE workflow). Replace placeholders, repeat the endpoint section only for affected frontend routes, and remove these instructions before delivery. Keep exact wire keys/codes and necessary contract detail as plain factual statements, without repetition. Omit unrelated old features/APIs, reuse provenance, irrelevant exclusions, unrequested checklists and UI prescriptions. Remove optional/unused headings rather than writing not-applicable filler. One compact example per meaningful shape is normally enough.
 
-## Scope and API changes
+## Purpose and endpoints
 
-{{CLIENT_PURPOSE_AND_VERIFIED_LIMITATIONS}}
+{{CURRENT_FEATURE_PURPOSE_IN_ONE_OR_TWO_SENTENCES}}
 
-| Method + full path | Audience | New / modified / removed | What changed | FE action | Detail |
-|---|---|---|---|---|---|
-| {{METHOD_AND_PATH}} | {{AUDIENCE}} | {{CHANGE_KIND}} | {{WIRE_OR_BEHAVIOR_CHANGE}} | {{REQUIRED_FE_CHANGE}} | {{SECTION_LINK}} |
-
-{{CLEARLY_LABEL_UNCHANGED_DEPENDENCIES_AND_NON_FE_ENDPOINT_EXCLUSIONS_IF_ANY}}
+| Method + full path | Purpose | Detail |
+|---|---|---|
+| {{METHOD_AND_PATH}} | {{ENDPOINT_PURPOSE}} | {{SECTION_LINK}} |
 
 ## Shared client requirements
 
@@ -18,19 +16,7 @@ Author this handoff in the target project's language (Thai for Nick's Thai FE wo
 
 {{EXACT_SUCCESS_AND_ERROR_ENVELOPES_HTTP_STATUS_RULES_WITH_PER_ROUTE_EXCEPTIONS}}
 
-## FE screens, actions, and flow
-
-| Screen / control / user action | Endpoint | Permission + eligible state | Loading / empty / error / success behavior |
-|---|---|---|---|
-| {{CLIENT_ACTION}} | {{METHOD_AND_PATH}} | {{ACTUAL_PERMISSION_AND_STATE}} | {{FE_HANDLING}} |
-
-{{PREREQUISITE_ID_LOOKUPS_NAVIGATION_REFRESH_RULES_AND_OPTIONAL_UX_SUGGESTIONS_LABELED}}
-
 ## {{METHOD_AND_PATH}} — {{PURPOSE}}
-
-### What changed / what FE must do
-
-{{NEW_ENDPOINT_PURPOSE_OR_BEFORE_AFTER_AND_COMPATIBILITY_FOR_MODIFIED_ENDPOINT}}
 
 ### Auth, permissions, and action eligibility
 
@@ -40,42 +26,38 @@ Author this handoff in the target project's language (Thai for Nick's Thai FE wo
 
 {{EXACT_HEADERS_PATH_QUERY_AND_VALID_JSON_BODY_EXAMPLES_OR_EXPLICIT_NO_BODY}}
 
-| Key path / location | Type / format | Required / nullable | Default / omission behavior | Validation / allowed values | FE responsibility |
-|---|---|---|---|---|---|
-| {{KEY_PATH}} | {{TYPE}} | {{REQUIREDNESS}} | {{DEFAULT_OR_OMISSION}} | {{CONSTRAINT}} | {{FE_INPUT_ACTION}} |
+| Key path / location | Type / format | Required / nullable | Default / omission behavior | Validation / allowed values |
+|---|---|---|---|---|
+| {{KEY_PATH}} | {{TYPE}} | {{REQUIREDNESS}} | {{DEFAULT_OR_OMISSION}} | {{CONSTRAINT}} |
 
-{{NESTED_ARRAY_UPDATE_SEMANTICS_MINIMAL_AND_FULL_VALID_VARIANTS_WHEN_RELEVANT}}
+{{RELEVANT_NESTED_FIELD_AND_UPDATE_SEMANTICS_NOT_ALREADY_COVERED}}
 
 ### Successful response
 
 {{ACTUAL_HTTP_STATUS_AND_COMPLETE_JSON_EXAMPLE_OR_VERIFIED_EMPTY_BODY}}
 
-| Key path | Type / nullable / omitted | Meaning / units / enum | FE handling |
-|---|---|---|---|
-| {{KEY_PATH}} | {{TYPE_AND_PRESENCE}} | {{CLIENT_MEANING}} | {{CLIENT_USAGE}} |
+| Key path | Type / nullable / omitted | Meaning / units / enum |
+|---|---|---|
+| {{KEY_PATH}} | {{TYPE_AND_PRESENCE}} | {{CLIENT_MEANING}} |
 
 {{EMPTY_LIST_NULL_OR_ASYNC_VARIANTS_IF_APPLICABLE}}
 
-### Errors and FE recovery
+### Errors
 
-| HTTP status | Exact code / shape | When | Example | FE handling / retry |
-|---|---|---|---|---|
-| {{HTTP_STATUS}} | {{EXACT_CODE}} | {{TRIGGER}} | {{ERROR_EXAMPLE_LINK}} | {{SAFE_CLIENT_ACTION}} |
+| HTTP status | Exact code / shape | When | Example |
+|---|---|---|---|
+| {{HTTP_STATUS}} | {{EXACT_CODE}} | {{TRIGGER}} | {{ERROR_EXAMPLE_LINK}} |
 
 {{COMPLETE_SYNTHETIC_ERROR_JSON_EXAMPLES_FOR_RELEVANT_SHAPES_AND_EXPLICIT_SHARED_ERROR_REFERENCES}}
 
-### Client constraints and follow-up
+### Client constraints (only if applicable)
 
-{{APPLICABLE_FILTER_SORT_PAGINATION_TIMING_TARGETING_IDEMPOTENCY_ASYNC_FAKE_ONLY_AND_REFRESH_RULES}}
+{{NECESSARY_PAGINATION_TIMING_TARGETING_IDEMPOTENCY_ASYNC_FAKE_ONLY_OR_ERROR_RECOVERY_RULES}}
 
-## FE integration and adoption checklist
+## Existing contract changes (only if client adoption is required)
 
-- [ ] Integrate every listed new/modified route and handle any removed/replaced route.
-- [ ] Apply exact auth, permission, state, and resource-visibility rules; still handle server rejection.
-- [ ] Send the documented keys/types/defaults/omission semantics; handle every relevant response variant.
-- [ ] Handle success, validation, permission, conflict, unavailable, and other documented errors by actual HTTP status/envelope.
-- [ ] Implement applicable loading/empty/refetch, list controls, retry/idempotency, and timing behavior.
-- [ ] Show fake/demo/unsupported limitations accurately where applicable.
-- [ ] Remove old fields/paths or update behavior exactly as the modified-route adoption notes require.
+{{CONCISE_RELEVANT_CHANGED_KEY_OR_BEHAVIOR_AND_REQUIRED_CLIENT_ADJUSTMENT}}
 
-{{REPLACE_GENERIC_CHECKBOXES_WITH_CONCRETE_FEATURE_ACTIONS_AND_LIST_ANY_UNRESOLVED_CLIENT_CONTRACT_QUESTIONS}}
+## Integration notes (optional)
+
+{{ONLY_ADDITIONAL_TASK_SPECIFIC_REQUIREMENTS_OR_A_BRIEF_OPTIONAL_USAGE_EXAMPLE_NOT_UI_INSTRUCTIONS}}
