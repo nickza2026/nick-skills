@@ -8,6 +8,8 @@ Read trusted repository instructions and inspect the nearest comparable working 
 
 Use existing helpers and shared boundaries. Do not add feature-specific wrappers, new layers/interfaces, dependencies, defensive guards or arbitrary limits merely because they sound like a general best practice. Improvements within the established pattern are welcome: clearer code, correct field validation, focused bug fixes and adequate tests. Do not turn a local feature task into an unapproved codebase-wide cleanup to make everything uniform.
 
+For the Go pgsql baseline, the explicit [query construction convention](../../bootstrapping-go-backends/references/database-and-testing.md#query-construction) is pgctx for simple fixed SQL and pgstmt for complex/dynamic queries, not manual SQL concatenation. Apply it to new/changed queries even when older code concatenates SQL; preserve other local patterns and semantics rather than rewriting unrelated queries or migrating another DB stack.
+
 ## Route example: no unexplained per-feature body cap
 
 If comparable RPC routes use direct adapters:

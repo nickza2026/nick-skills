@@ -2,6 +2,12 @@
 
 Use these cases to evaluate skill behavior. A plan or dry-run is behavioral review, not proof that a generated application builds or runs.
 
+## SQL construction follows the explicit pgctx/pgstmt rule
+
+**Input:** A feature needs a simple fixed lookup plus a list with optional predicates, joins, sort choices and a conditional update. Older nearby code builds WHERE/SET clauses by concatenating strings and incrementing placeholder indexes.
+
+**Expected:** Use fixed parameterized SQL through pgctx for the simple lookup and pgstmt for complex/dynamic queries. Do not copy the old concatenation or replace it with `fmt.Sprintf`, `strings.Builder`, fragment lists or manual placeholder counters. Bind values, allowlist identifiers/sort directions and preserve the same transaction callback context. Keep null/tenant/pagination semantics and test relevant combinations. A safe fixed SQL string is not prohibited; a bound but manually assembled dynamic query still violates this explicit convention. Do not migrate a different DB stack, rewrite unrelated queries or invent builder APIs.
+
 ## Existing RPC routes keep their established adapter pattern
 
 **Input:** An existing API's comparable routes use `am.Handler(...)` directly. A new List/Get pair has no requirement or demonstrated need for a separate body cap; protection may already exist at the server/group layer.

@@ -3,6 +3,8 @@
 ## Contents
 
 - [Database access](#database-access)
+  - [Query construction](#query-construction)
+  - [Connection and error handling](#connection-and-error-handling)
 - [Transactions](#transactions)
 - [Embedded migration runner](#embedded-migration-runner)
 - [Test database lifecycle](#test-database-lifecycle)
@@ -12,7 +14,18 @@
 
 Default to database/sql + lib/pq. Inject a DB with `pgctx.Middleware(db)` for HTTP requests or `pgctx.NewContext(ctx, db)` for jobs/tests, and propagate context through every operation.
 
-Use `pgctx.QueryRow(ctx, query, args...).Scan(...)`, `pgctx.Exec(ctx, query, args...)`, or pgstmt as appropriate. Bind values; allowlist dynamic identifiers rather than treating them as bindable values. Close rows and check iteration errors, or use the verified `pgstmt.IterWith` API.
+### Query construction
+
+- Use **pgctx for simple fixed SQL**: `pgctx.Query`, `pgctx.QueryRow(...).Scan(...)` or `pgctx.Exec`, with bound arguments. A fixed parameterized SQL string is valid; query complexity is about structure and conditional composition, not line count. Harmless compile-time literal formatting is not dynamic query assembly.
+- Use **pgstmt for complex/dynamic queries**, including conditional filters/joins, composed lists and conditional updates. Use the builder to manage statement structure, bound arguments and placeholder numbering instead of recreating a SQL builder in application code.
+- Do not construct dynamic SQL using string concatenation, `fmt.Sprintf`, `strings.Builder`, manual WHERE/SET fragment lists, joined clause strings or incremented placeholder counters. Binding values alone does not make manual structural assembly the requested pattern. This rule does not claim that every concatenated query is an SQL injection; unsafe interpolation and a convention violation are different findings.
+- Bind every runtime value. Allowlist identifiers and sort directions using trusted mappings; they are SQL structure, not ordinary bindable values. Passing client-controlled text to a builder's raw fragment does not make it safe. Do not generate update column maps directly from client keys.
+- Keep pgstmt execution in the same pgctx context/physical transaction as the surrounding operation. In `RunInTx`, use the callback context, not an outer context or a separate pool. Verify APIs against the installed pgsql version and local examples; do not invent builder methods. If necessary PostgreSQL syntax is not supported, explain the concrete limitation and obtain approval for a focused exception rather than silently using manual concatenation or a different query library.
+- Apply this explicit convention to new/changed SQL in the pgsql baseline. Older concatenation does not override it, but it does not authorize unrelated SQL rewrites or migration of another DB stack. Preserve the existing query's permissions, tenant scope, null semantics, sorting/pagination and transaction guarantees. Test relevant predicate combinations, parameter binding and transaction behavior when changing queries.
+
+Close rows and check iteration errors, or use the verified `pgstmt.IterWith` API.
+
+### Connection and error handling
 
 Map `sql.ErrNoRows` with `errors.Is` and driver errors such as `*pq.Error` with `errors.As` into stable application errors. For example, PostgreSQL `23505` is a unique violation, not an arbitrary internal failure.
 

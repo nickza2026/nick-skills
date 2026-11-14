@@ -28,6 +28,22 @@ test('exactly seven distinct prefixed backend roles, including DB/security', () 
   assert.equal(roles.find(role => role.id === 'security-reviewer').access, 'read');
 });
 
+test('all adapters require pgctx/pgstmt selection and bound context-aware SQL', () => project(root => {
+  for (const harness of ['cursor', 'codex', 'claude', 'letta', 'pi']) {
+    const plan = makePlan(options(root, harness));
+    const implementation = plan.files.find(file => file.relative.includes('nick-implementer.')).content;
+    const verification = plan.files.find(file => file.relative.includes('nick-verifier.')).content;
+    for (const content of [implementation, verification]) {
+      assert.ok(content.includes('pgctx for simple fixed SQL and pgstmt for complex/dynamic queries'), harness);
+      assert.ok(content.includes('same context/transaction'), harness);
+      assert.ok(content.includes('placeholder counters'), harness);
+    }
+    assert.ok(implementation.includes('fmt.Sprintf, strings.Builder'));
+    assert.ok(implementation.includes('even if old code concatenates it'));
+    assert.ok(verification.includes('unsafe SQL interpolation from a convention violation'));
+  }
+}));
+
 test('all adapters keep existing-project coding patterns and safeguards in implementer/verifier roles', () => project(root => {
   for (const harness of ['cursor', 'codex', 'claude', 'letta', 'pi']) {
     const plan = makePlan(options(root, harness));

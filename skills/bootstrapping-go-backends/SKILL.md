@@ -1,6 +1,6 @@
 ---
 name: bootstrapping-go-backends
-description: Bootstraps Go backends in Nick's single-module, multi-application style with cmd composition roots, app-owned features, shared pkg packages, PostgreSQL/database/sql/pgsql and arpc/httpmux/parapet. Extends matching existing repositories using their established local code patterns, not new per-feature conventions. Adds workers/schedulers only when required. Use for Go scaffolding, stack selection or extending a matching repository. Do not force app names, speculative wrappers/limits or an architecture migration.
+description: Bootstraps Go backends in Nick's single-module, multi-application style with cmd composition roots, app-owned features, shared pkg packages, PostgreSQL/database/sql/pgsql and arpc/httpmux/parapet. Uses pgctx for simple SQL and pgstmt for complex/dynamic queries, not manual SQL concatenation. Extends matching repositories using established local patterns. Adds workers/schedulers only when required. Use for Go scaffolding, SQL implementation, stack selection or extending a matching repository. Do not force app names, speculative wrappers/limits or an architecture migration.
 ---
 
 # Bootstrap Go Backends
@@ -61,6 +61,8 @@ Wire each application's actual config, database dependencies, migration role, mi
 ### 4. Complete a vertical slice
 
 Implement a small feature relevant to the requested application: typed inputs/results, validation and authorization, operation/query, route or job registration, schema when necessary, tests, and the applicable contract documentation. Avoid ceremonial controller/service/repository/interface layers without a real responsibility.
+
+For the pgsql baseline, use **pgctx for simple fixed SQL and pgstmt for complex/dynamic queries**. Do not hand-assemble dynamic SQL with string concatenation, `fmt.Sprintf`, `strings.Builder`, manual condition fragments or placeholder counters. Bind runtime values, allowlist identifiers/sort directions and preserve the current context/transaction. Follow [query construction](references/database-and-testing.md#query-construction); this explicit rule applies to new/changed queries even if older code concatenates SQL, not as permission to rewrite unrelated queries or switch an existing project's DB stack.
 
 When changing schema, follow [migration authoring and immutability](references/database-and-testing.md#embedded-migration-runner): normally keep one numbered SQL migration file per delivery commit rather than creating a new version for each edit. Amend an existing uncommitted, unapplied draft instead of proliferating files; never infer "unapplied" from Git status alone. Code, tests, and documentation may still share that commit.
 
