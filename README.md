@@ -19,6 +19,8 @@ The Go baseline is **one repository, one Go module, and as many application bina
 
 Browsable lists support validated sorting. Pagination is selected per workload: exact totals are optional, and large lists can use count-free next-page navigation rather than an unconditional COUNT query.
 
+For the pgsql Go baseline, use **pgctx for simple fixed SQL and pgstmt for complex/dynamic queries**, not hand-built dynamic SQL strings or placeholder counters. Bind values, allowlist identifiers and preserve the same context/transaction; see [query construction](skills/bootstrapping-go-backends/references/database-and-testing.md#query-construction).
+
 When changing an existing project, [inspect and follow its established local coding patterns](skills/initializing-agent-teams/references/existing-project-patterns.md). Improve within the same pattern rather than introducing unexplained per-feature wrappers, arbitrary limits, new layers or dependencies. Obtain approval for necessary material exceptions and preserve correctness/security safeguards; these defaults do not authorize a whole-project rewrite.
 
 When implementing or fixing frontend-facing APIs, create/update the feature's `.md` handoff using [documenting-frontend-api-handoffs](skills/documenting-frontend-api-handoffs/SKILL.md). Cover the current task's affected routes and wire-contract changes, including response-only changes. Keep required integration facts; omit unrelated legacy APIs, reuse provenance, irrelevant exclusions and UI instructions. Optional examples stay brief. This is not permission to write files during a read-only review.

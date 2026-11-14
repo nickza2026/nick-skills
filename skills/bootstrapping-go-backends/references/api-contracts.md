@@ -67,7 +67,7 @@ Select pagination per endpoint and workload using [pagination and sorting](pagin
 - Expose allowlisted sort fields/directions for browsable lists unless an explicitly documented fixed domain order forbids selectable sorting. In either case, use a deterministic tie-breaker when applicable and apply ordering in SQL before pagination, not in memory after fetching a page.
 - Test default/alternate/invalid sort and pagination boundaries. Never concatenate unchecked client identifiers or sort directions into SQL.
 - Distinguish omitted, null, empty, false, and zero for updates. Use pointers/custom types when needed; zero values do not automatically mean "not supplied."
-- Use pgstmt for suitable dynamic filters/updates or readable parameterized SQL. Do not generate arbitrary column maps from client input.
+- Use pgctx for simple fixed SQL and pgstmt for complex/dynamic queries; follow [query construction](database-and-testing.md#query-construction). Do not concatenate filter/WHERE/SET fragments, interpolate values or hand-number dynamic placeholders. Keep bound values, allowlisted identifiers and the same context/transaction; never generate arbitrary column maps from client input.
 
 ## Specifications and integration handoff
 
