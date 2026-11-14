@@ -45,6 +45,8 @@ Never request/print the secret values or grant a browser privileged provider cre
 
 Read [the complete Dockerfile examples](dockerfile-examples.md) and choose API + Swagger, Worker, or the minimal no-generator template before materializing `build/<app>/Dockerfile`. Their synthetic app names, Go image version, and ports are not approved target configuration. Keep reference-only inputs out of publication unless explicitly authorized.
 
+For a Node application/build stage, apply [the Node security pinning policy](node-security-pinning.md): inspect compatibility, recheck official releases/security advisories and image tags, and pin every Node stage to the approved major's exact current patched version. The helper's Node 20+ syntax minimum is not a supported container recommendation. Do not change host Node, Go examples or action runtimes, or claim tag/metadata checks are a CVE-free image build.
+
 Build from one module root using `build/<app>/Dockerfile`; choose actual app names and module-compatible Go versions. The Docker template cross-compiles CGO-free code for the target platform and uses a non-root distroless runtime. If CGO/platform/runtime assets require something different, propose it. A successful Go binary build does not prove external templates/assets were copied or that non-root permissions are correct.
 
 When generated Swagger imports are required, use a verified pinned generator before compilation, e.g. `github.com/swaggo/swag/cmd/swag@v1.16.6` with the correct `cmd/<app>/main.go`, output directory, and instance name. Workers do not need Swagger for symmetry. If approved separate tests compile generated imports, generate there too, not only inside Docker.

@@ -12,6 +12,7 @@ Use an evidence-driven loop: **reproduce → explain the cause → capture a fai
 ## Scope and safety
 
 - Follow the current task and repository instructions. Preserve dirty files and unrelated work. Use the target stack and test conventions rather than replacing them with a preferred framework.
+- Follow [existing-project coding patterns](../initializing-agent-teams/references/existing-project-patterns.md): inspect nearest comparable code and keep its routing/adapters, middleware, validation/errors, data access and tests. Do not add one-off defensive wrappers, arbitrary body limits or abstractions as generic cleanup. Surface an evidenced necessary exception for approval unless already authorized; do not copy a known defect or remove existing safeguards for stylistic consistency.
 - Treat a bug-fix request as authority for the scoped fix and necessary regression tests, not unrelated refactoring, changed business rules, deployment, commits, or pushes.
 - A read-only PR review remains read-only. Reproduce/report within its authorized safe scope; obtain fix authorization before modifying the reviewed source or adding project tests.
 - Inspect commands, test/setup code, dependency hooks, configuration, and reachable side effects before execution. Never reproduce harm using production/shared data, real credits/money, live provider calls, or destructive operations.

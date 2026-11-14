@@ -16,6 +16,7 @@ Create a small reusable team, not seven running workers. Detect the active harne
 | Public GitHub instructions instead of workstation paths | [Pinned public GitHub source](references/public-github-source.md) |
 | Exact native formats and limitations | [Native adapters](references/native-adapters.md) |
 | Seven role contracts, delegation, and model defaults | [Roles and models](references/roles-and-models.md), [canonical contracts](assets/roles.json) |
+| Implementing/fixing code in an existing repository | [Existing-project coding patterns](references/existing-project-patterns.md) |
 | Codex example from a role/model/reasoning screenshot | [Codex and Letta-with-Codex example](references/codex-model-example.md) |
 | Cursor advisor/DB/security model preference | [Cursor Opus 5.5 high example](references/cursor-model-example.md) |
 | Evidence/version boundaries | [Source baseline](references/source-baseline.md) |

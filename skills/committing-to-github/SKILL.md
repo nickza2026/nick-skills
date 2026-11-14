@@ -1,6 +1,6 @@
 ---
 name: committing-to-github
-description: "Prepares authorized Git commits, GitHub pushes, and pull requests in Nick's workflow: one fresh branch per delivery batch, include ready cross-task changes, prefer one commit or a small split on that branch, exclude credentials from content/history, and open a PR describing all included features and fixes after a successful publish. Stop on push or PR failure without searching for keys or repairing authentication. Use for an authorized commit/publish/PR task. Authoring this skill grants no permission to publish the current repository."
+description: "Prepares authorized commits, pushes and PRs in Nick's workflow: one fresh delivery branch, ready cross-task changes, concise commits and credential checks across content/history. Writes PR titles, descriptions and summary comments from final net changes against the verified target base, not discarded branch drafts or commit-message diaries. Never calls a branch-only add-then-remove a base removal. Uses actual test evidence; stops on push/PR failure without auth repair. Use for authorized Git publication or PR summary authoring/updates. Skill authoring grants no publication permission."
 ---
 
 # Commit, Push, and Open a GitHub PR
@@ -68,11 +68,17 @@ Capture the actual push exit/error result. On the **first failed push**, stop an
 
 An authentication failure, remote rejection, hook rejection, network failure, or non-fast-forward is not permission to force through. If a connection failed after remote acceptance might have occurred, report remote status as uncertain rather than claiming it is definitely absent. Any follow-up verification/repair must use approved access, not credential discovery.
 
-### 6. Open the PR and describe the complete branch
+### 6. Open the PR and describe final net changes
 
 After a successful authorized full publish, use an available, already configured GitHub interface to open a PR from the same delivery branch to the verified intended base. Do not create a second branch for the included fix. Reuse a known existing PR rather than creating a duplicate; preserve other contributors' description content when updating it.
 
-Build the title/body from the complete branch-to-base diff and included commits, not only the last commit or the feature named in the branch. For a branch containing feature-B and fix-A, describe **both**. Include other shipped work, relevant API/config/schema changes, actual verification outcomes, and integration/rollout risks. Follow repository PR templates and use [the body template](assets/pull-request-body.md.tmpl) as a starting point; render all tokens and remove irrelevant empty sections. Do not invent tests, ticket links, or requirements.
+Before writing a PR title, description or summary comment, read [net-change summary rules](references/pr-net-changes.md). Verify the actual target base and final head, inspect the PR's complete net diff, and describe **only surviving delivered changes relative to that base**. Include both feature-B and fix-A when both remain in the net diff, not just the last commit or the branch label. Commit history may help investigate evidence, but the summary is not a union of commit messages or a development diary.
+
+Do not describe a draft route/field/file added and removed within the same unmerged branch as a deletion, breaking change or compatibility change if it never existed in the target base. If the final new API is List/Get only, describe that API; omit abandoned status/timeline routes and speculative "removed routes return 404" claims. A removal requires a base contract that this PR actually removes; renames/moves and unrelated target-branch changes are not automatically API removals. Verify mounted behavior/tests separately before asserting an HTTP status.
+
+Apply the same rule when updating an existing PR description or posting a progress/summary comment: recompute the current net result and remove stale draft claims rather than appending iteration history. A direct reviewer question can need a concise explanation of an intermediate decision, but label it as branch-local work, not a change to main's contract. Never alter another contributor's comments or a live PR merely because this skill was edited.
+
+Include actual verification outcomes and only relevant integration/rollout constraints. Follow repository templates and [the body template](assets/pull-request-body.md.tmpl); replace tokens and remove empty/irrelevant sections, draft alternatives, unrelated exclusions and speculative compatibility notes. Do not invent tests, ticket links, requirements or behavior. Net-only summary wording does **not** weaken the all-outgoing-history credential scan in step 4.
 
 If PR creation is unavailable or fails for any reason, **stop and report it**. Do not install a new client, hunt credentials, run login, change authentication, switch accounts/remotes, or repeatedly retry/fallback to force it through. If the command may have created a PR before a connection failure, report uncertainty and do not create another blindly.
 

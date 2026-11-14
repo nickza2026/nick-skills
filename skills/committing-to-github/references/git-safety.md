@@ -58,6 +58,7 @@ If a native commit specialist is delegated, provide the same input/stored-messag
 
 - In the authorized full publish workflow, attempt PR creation only after push succeeds. Preserve explicit commit-only, push-only, no-PR, base-branch, or existing-PR instructions.
 - Use the same delivery branch for all included features/fixes and the PR. Inspect the complete base-to-branch scope; a second commit or unrelated ready fix must not disappear from the title/body.
+- Apply [net-change summary rules](pr-net-changes.md) to PR titles/descriptions and summary comments. Describe surviving final changes against the verified target base, not a union of commit messages. An add-then-remove that never existed in base is not a removal/breaking change; do not infer 404 from absence. Keep all-outgoing-history credential scans unchanged even when edits cancel in the final diff.
 - Prefer an already configured interface such as GitHub CLI when available. Tool absence, missing permissions/authentication, network errors, or API rejection require a stop/report, not client installation, credential search, account switching, or a login flow.
 - Include actual changes, tests and unrun/blocked checks, compatibility/config/migration notes, and relevant risks without secret values. Do not fabricate a successful test or an existing task link to fill a template.
 - Report a PR URL only when supported by the actual command/API response or read-only verification. A pushed branch is not an opened PR. An ambiguous creation result is not permission to blindly create duplicates.

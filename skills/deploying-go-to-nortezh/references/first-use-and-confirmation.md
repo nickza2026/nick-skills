@@ -31,6 +31,8 @@ Propose a **deployment name** for every app/environment, derived from the target
 
 Confirm `WebService` versus `Worker` for every app. For WebService confirm the actual listening port and platform/action port behavior. The exact samples omit `port`; do that **only after confirming** the effective platform/action setting matches the service. When a nondefault explicit port is needed, show the `port` line as an approved parameter adaptation. Worker omits port.
 
+If any app/build stage uses Node, inspect and confirm its supported compatible major, package manager/lockfile and native/framework constraints. Present the freshly verified exact patch/image/variant and dated security evidence in the matrix; do not silently change majors or use the helper's Node syntax minimum as the container version. Apply [Node security pinning](node-security-pinning.md) before writing the Dockerfile.
+
 Confirm service-account secret **names and scope**, not their values. Examples use `NTZ_SVA_EMAIL`/`NTZ_SVA_KEY` for staging and `NTZ_SVA_EMAIL_PROD`/`NTZ_SVA_KEY_PROD` for production. Those are proposals, not mandates. The exact template uses repository/organization secret resolution without a GitHub `environment:` field. If credentials are environment-scoped or approval protection is required, propose the explicit deployment-job `environment:` change and confirm it; merely naming an environment in the plan does not enable GitHub Environment secrets/protections.
 
 ## 3. Show one approval table

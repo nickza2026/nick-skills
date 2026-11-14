@@ -2,6 +2,8 @@
 
 Apply this reference to each application that exposes an HTTP API, not to every executable in the repository.
 
+These are new-project defaults. In an existing project, inspect comparable mounted routes and follow [the established local coding pattern](../../initializing-agent-teams/references/existing-project-patterns.md) before applying them. Do not introduce a different auth/error/adapter convention or uniquely wrap a new List/Get pair in `http.MaxBytesHandler(..., 4096)` simply as defensive boilerplate. Preserve approved shared middleware/limits; a real requirement or demonstrated correctness/security need calls for a focused, approved, consistent exception, not an arbitrary per-feature cap.
+
 ## Routing and function shape
 
 Register method + path with httpmux and adapt typed functions through `arpc.Manager`. Use a shape such as `func Get(ctx context.Context, p *GetParams) (*GetResult, error)`, with JSON tags and `Valid() error` on request types.
@@ -69,7 +71,7 @@ Select pagination per endpoint and workload using [pagination and sorting](pagin
 
 ## Specifications and integration handoff
 
-For each new/modified frontend-facing endpoint, create or update a `.md` using [documenting-frontend-api-handoffs](../../documenting-frontend-api-handoffs/SKILL.md), with a complete changed-route inventory and before/after adoption notes. Include request/response and error examples verified against actual runtime-facing code; omit SQL/migrations, backend internals, deployment commands, and backend test/commit history. Do not mistake a Swagger update for the FE handoff.
+For each affected frontend-facing endpoint in the current task, create/update a `.md` using [documenting-frontend-api-handoffs](../../documenting-frontend-api-handoffs/SKILL.md). Include verified request/response fields, errors and necessary client constraints; keep adoption notes only for relevant changes to the same existing contract. Omit unrelated legacy comparisons, reuse provenance, irrelevant exclusions and UI prescriptions as well as backend internals/setup/test history. Optional usage examples stay brief. Swagger alone does not replace the handoff.
 
 Inspect validation, serialization, route registration, and permission checks before documenting behavior. Generate a specification per exposed API application; a worker does not need a Swagger document merely for symmetry.
 

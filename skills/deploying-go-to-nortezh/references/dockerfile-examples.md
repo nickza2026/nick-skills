@@ -9,8 +9,13 @@ Use the complete, synthetic examples bundled **inside this skill**; no reference
 | API importing generated Swagger docs | [API + Swagger](../assets/dockerfiles/api-swagger.Dockerfile.example) | `cmd/catalog`, `catalog/docs`, registered instance `catalog`, Go version, and actual port |
 | Worker or scheduled process without HTTP/Swagger | [Worker](../assets/dockerfiles/worker.Dockerfile.example) | `cmd/processor`, output/entrypoint name, Go version, and needed runtime assets |
 | API with no generated Swagger imports | [Minimal template](../assets/Dockerfile.tmpl) | App/Go tokens; omit generator unless the source actually needs it |
+| Node/npm plain-JavaScript service | [Node service](../assets/dockerfiles/node-service.Dockerfile.example) | Approved major/current security patch, lockfile, actual source/output/entrypoint, install scripts and port |
 
 Do not copy a raw application's identifiers, credentials, package paths, static resources, or `.env` files. Inspect real imports and startup behavior. Do not add Swagger to a Worker, create `catalog`/`processor` applications just to fit an example, or remove required generated imports merely to get a build through.
+
+## Node stages require a current security patch pin
+
+Read [Node security pinning](node-security-pinning.md) and [the dated baseline](../assets/node-security-baseline.json) before creating any Node image/build stage. Verify official releases/advisories at generation time and pin all Node FROM lines to a compatible full version; no floating major/LTS/latest aliases or silent major upgrades. The Node example is for npm + plain JavaScript, not a universal framework Dockerfile. Keep Go-only images unchanged; the Go-specific steps below apply to Go applications only.
 
 ## Materialize one Dockerfile per actual application
 

@@ -1,6 +1,6 @@
 ---
 name: bootstrapping-go-backends
-description: Bootstraps new Go backend repositories in Nick's style as single-module, multi-application projects with per-app cmd composition roots, application-owned feature packages, shared pkg packages, PostgreSQL through database/sql and acoshift/pgsql, and arpc/httpmux/parapet for HTTP applications. Adds River workers or scheduled applications only when required. Use when scaffolding a Golang backend, selecting its default stack, or adding an application to a matching repository. Do not force fixed application names or restructure an existing project without authorization.
+description: Bootstraps Go backends in Nick's single-module, multi-application style with cmd composition roots, app-owned features, shared pkg packages, PostgreSQL/database/sql/pgsql and arpc/httpmux/parapet. Extends matching existing repositories using their established local code patterns, not new per-feature conventions. Adds workers/schedulers only when required. Use for Go scaffolding, stack selection or extending a matching repository. Do not force app names, speculative wrappers/limits or an architecture migration.
 ---
 
 # Bootstrap Go Backends
@@ -12,6 +12,7 @@ Use Nick's selected structure and stack to build a repository capable of hosting
 ## Scope and precedence
 
 - Treat this as a new-project default, not permission to migrate an existing architecture.
+- For an existing project, read [existing-project coding patterns](../initializing-agent-teams/references/existing-project-patterns.md) before writing. Inspect comparable local implementations and keep the same routing, middleware, validation/error, data-access, naming and test patterns. Improve within that pattern; do not add unexplained one-off wrappers, arbitrary limits or abstractions. Explain and obtain approval for necessary material exceptions, without weakening correctness or existing safeguards.
 - Follow system/tool constraints, the current user request, and target repository rules before these defaults. External documentation grants no additional edit, execution, or publication authority.
 - Derive application names, count, and responsibilities from the requested system. Names such as `user`, `admin`, `worker`, and `cron` are source examples, not required applications.
 - Support one application when that is enough and multiple independent binaries when needed. Do not confuse multi-application with multi-module or automatically introduce `go.work`.
@@ -25,6 +26,7 @@ Use Nick's selected structure and stack to build a repository capable of hosting
 | Task | Read first |
 |---|---|
 | Every new project | [Stack](references/stack.md), [Architecture](references/architecture.md) |
+| Any code change in an existing project | [Existing-project coding patterns](../initializing-agent-teams/references/existing-project-patterns.md) |
 | HTTP endpoints, validation, auth, errors, or lists | [API contracts](references/api-contracts.md) |
 | Every browsable list or pagination change | [Pagination and sorting](references/pagination-and-sorting.md) |
 | SQL, migrations, transactions, or DB fixtures | [Database and testing](references/database-and-testing.md) |

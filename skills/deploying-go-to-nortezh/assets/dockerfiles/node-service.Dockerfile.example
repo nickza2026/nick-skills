@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1
+# Synthetic npm/plain-JavaScript service; recheck node-security-baseline.json first.
+# Node 26 is an example major, not permission to upgrade an existing Node 22/24 app.
+FROM node:26.13.0-bookworm-slim AS dependencies
+WORKDIR /app
+COPY package.json package-lock.json ./
+# Use only when required dependencies do not need install lifecycle/native builds.
+RUN npm ci --omit=dev --ignore-scripts && mkdir -p node_modules
+
+FROM node:26.13.0-bookworm-slim AS runtime
+ENV NODE_ENV=production
+WORKDIR /app
+COPY --from=dependencies --chown=node:node /app/node_modules ./node_modules
+COPY --chown=node:node package.json ./
+COPY --chown=node:node src ./src
+USER node
+# Metadata only: confirm actual listen address and Nortezh port separately.
+EXPOSE 8080
+CMD ["node", "src/server.js"]
