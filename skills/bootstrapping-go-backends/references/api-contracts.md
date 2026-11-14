@@ -2,6 +2,8 @@
 
 Apply this reference to each application that exposes an HTTP API, not to every executable in the repository.
 
+These are new-project defaults. In an existing project, inspect comparable mounted routes and follow [the established local coding pattern](../../initializing-agent-teams/references/existing-project-patterns.md) before applying them. Do not introduce a different auth/error/adapter convention or uniquely wrap a new List/Get pair in `http.MaxBytesHandler(..., 4096)` simply as defensive boilerplate. Preserve approved shared middleware/limits; a real requirement or demonstrated correctness/security need calls for a focused, approved, consistent exception, not an arbitrary per-feature cap.
+
 ## Routing and function shape
 
 Register method + path with httpmux and adapt typed functions through `arpc.Manager`. Use a shape such as `func Get(ctx context.Context, p *GetParams) (*GetResult, error)`, with JSON tags and `Valid() error` on request types.

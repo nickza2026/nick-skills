@@ -28,6 +28,25 @@ test('exactly seven distinct prefixed backend roles, including DB/security', () 
   assert.equal(roles.find(role => role.id === 'security-reviewer').access, 'read');
 });
 
+test('all adapters keep existing-project coding patterns and safeguards in implementer/verifier roles', () => project(root => {
+  for (const harness of ['cursor', 'codex', 'claude', 'letta', 'pi']) {
+    const plan = makePlan(options(root, harness));
+    const implementation = plan.files.find(file => file.relative.includes('nick-implementer.')).content;
+    const verification = plan.files.find(file => file.relative.includes('nick-verifier.')).content;
+    for (const required of ['inspect nearest comparable code', 'established local patterns', 'MaxBytesHandler(..., 4096)', 'evidenced necessary exception', 'existing safeguards']) assert.ok(implementation.includes(required), `${harness}: ${required}`);
+    assert.ok(verification.includes('requirement or evidenced approved exception'));
+    assert.ok(verification.includes('do not demand unrelated style rewrites'));
+  }
+}));
+
+test('all adapters carry net-only PR summaries while preserving all-history credential review', () => project(root => {
+  for (const harness of ['cursor', 'codex', 'claude', 'letta', 'pi']) {
+    const plan = makePlan(options(root, harness));
+    const publication = plan.files.find(file => file.relative.includes('nick-git-publisher.')).content;
+    for (const required of ['final net changes against the verified target base', 'PR summary comments/updates', 'never call add-then-remove a base removal', 'every outgoing commit', 'verify mounted behavior before claiming HTTP 404']) assert.ok(publication.includes(required), `${harness}: ${required}`);
+  }
+}));
+
 test('all adapters carry FE handoff duties without giving verifier write authority', () => project(root => {
   for (const harness of ['cursor', 'codex', 'claude', 'letta', 'pi']) {
     const plan = makePlan(options(root, harness));

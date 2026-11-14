@@ -2,6 +2,12 @@
 
 Use these as behavioral checks, not evidence that a real application bug or runtime test was executed while authoring this skill.
 
+## Fix within the existing project's pattern
+
+**Input:** A bug in an established API can be corrected using its existing adapter, validation, error and data-access helpers. An alternative patch adds a per-feature request wrapper or arbitrary body cap unrelated to the demonstrated failure.
+
+**Expected:** Reproduce and fix the actual cause in the established pattern, with sufficient red/green and related tests. Do not smuggle speculative hardening or new layers into the patch. Preserve existing safeguards; if evidence shows the pattern itself is unsafe or cannot satisfy the approved requirement, explain the smallest consistent exception and obtain approval for any material scope/contract change not already authorized.
+
 ## Existing test catches the bug
 
 Reproduce its failure against the unmodified behavior, identify the cause, make the smallest scoped fix, rerun that exact test and directly related checks, and record completed results. Do not add a duplicate test solely to satisfy a file-count ritual.

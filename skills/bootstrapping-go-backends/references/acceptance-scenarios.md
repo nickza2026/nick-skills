@@ -2,6 +2,12 @@
 
 Use these cases to evaluate skill behavior. A plan or dry-run is behavioral review, not proof that a generated application builds or runs.
 
+## Existing RPC routes keep their established adapter pattern
+
+**Input:** An existing API's comparable routes use `am.Handler(...)` directly. A new List/Get pair has no requirement or demonstrated need for a separate body cap; protection may already exist at the server/group layer.
+
+**Expected:** Inspect nearby routes, shared middleware and tests, then use the same direct adapter pattern. Do not uniquely add `http.MaxBytesHandler(..., 4096)`, a new interface/layer or a framework change as generic defensive cleanup. Keep existing global guards and required validation. If the peers instead use an approved common limit/wrapper, preserve that pattern. A necessary evidenced exception needs a focused explanation and approval unless already authorized, not blind copying of a known vulnerability or an unapproved whole-project cleanup.
+
 ## 1. One named application
 
 **Prompt:** Create an inventory API at the specified path/module with an items feature and PostgreSQL. No other applications are requested.
