@@ -1,15 +1,17 @@
 # Review report
 
-Put actionable correctness and safety findings first, ordered by severity. Avoid style-only blockers or unconditional approval.
+Put actionable correctness and safety findings first, ordered by severity. Include evidenced local-convention/file-ownership findings without presenting them as invented runtime defects. Avoid personal-style-only blockers or unconditional approval; a confirmed project consistency requirement is not merely personal taste.
 
-Report fewer, well-supported findings rather than filling a quota. Accept varied correct techniques. Omit trivial preference comments when they add noise; if a suggestion is useful, mark it optional and separate it from merge-blocking defects. Exact supplied task logic, safety, and meaningful performance remain non-optional.
+Report fewer, well-supported findings rather than filling a quota. Accept varied correct techniques that respect project constraints or have a justified exception. Omit trivial preference comments when they add noise; mark genuinely optional suggestions separately. Exact task logic, safety, confirmed local patterns and meaningful performance remain non-optional.
 
 ## Findings
 
 For each finding include:
 
 - **Severity and short title:** Critical for reachable catastrophic loss/security exposure; High for major financial, authorization, data-integrity, or availability failures; Medium for meaningful bounded incorrect behavior; Low for minor functional defects. Base severity on demonstrated impact and likelihood, not topic alone.
+- For local-convention/file-ownership issues, use severity proportionate to the demonstrated requirement/maintenance impact. A confirmed project-rule breach may need correction even when logic passes; do not fabricate functional harm to fit a severity label or downgrade it to an optional preference merely because it is not a runtime bug.
 - **Evidence:** changed file and narrow line range at the reviewed head; relevant directly connected caller/schema/test evidence when needed. Do not invent line numbers. Distinguish PR-introduced behavior from pre-existing conditions.
+- **Pattern/file findings:** label the category as a local-convention, duplication or ownership issue. Cite the nearest comparable base file/helper and changed location, explain the missing responsibility/need or established pattern violated, and recommend the smallest coherent correction. Do not claim a bug or security/performance regression without evidence, automatically assign high severity to a new file, or require a fix just because it looks unfamiliar. Keep unresolved rationale questions separate from confirmed findings.
 - **Trigger and impact:** concrete input, execution sequence, or safe reproduction; expected versus actual result and affected invariant. Do not claim a reproduction was run when it was only reasoned statically.
 - **Confidence:** established defect versus hypothesis, with the missing fact needed to confirm a hypothesis. Keep questions and optional style suggestions separate from correctness blockers.
 - **Recommendation:** describe the needed behavior without modifying code unless authorized.

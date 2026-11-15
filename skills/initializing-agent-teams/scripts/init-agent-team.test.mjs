@@ -28,6 +28,16 @@ test('exactly seven distinct prefixed backend roles, including DB/security', () 
   assert.equal(roles.find(role => role.id === 'security-reviewer').access, 'read');
 });
 
+test('all adapters enforce reviewer pattern continuity and reasoned file ownership without blanket bans', () => project(root => {
+  for (const harness of ['cursor', 'codex', 'claude', 'letta', 'pi']) {
+    const plan = makePlan(options(root, harness));
+    const implementation = plan.files.find(file => file.relative.includes('nick-implementer.')).content;
+    const verification = plan.files.find(file => file.relative.includes('nick-verifier.')).content;
+    assert.ok(implementation.includes('Before creating a file, establish a concrete responsibility'), harness);
+    for (const required of ['closest target-base patterns', 'inspect every added file', 'Report unjustified pattern drift', 'changed/base evidence', 'unclear rationale is a question', 'Do not edit implementation']) assert.ok(verification.includes(required), `${harness}: ${required}`);
+  }
+}));
+
 test('all adapters require pgctx/pgstmt selection and bound context-aware SQL', () => project(root => {
   for (const harness of ['cursor', 'codex', 'claude', 'letta', 'pi']) {
     const plan = makePlan(options(root, harness));
