@@ -10,6 +10,14 @@ Use existing helpers and shared boundaries. Do not add feature-specific wrappers
 
 For the Go pgsql baseline, the explicit [query construction convention](../../bootstrapping-go-backends/references/database-and-testing.md#query-construction) is pgctx for simple fixed SQL and pgstmt for complex/dynamic queries, not manual SQL concatenation. Apply it to new/changed queries even when older code concatenates SQL; preserve other local patterns and semantics rather than rewriting unrelated queries or migrating another DB stack.
 
+The [domain function layout](../../bootstrapping-go-backends/references/domain-function-layout.md) rules are likewise explicit for new/changed operations: Params, Valid, and Result directly above the operation; no single-use helpers or extra files; validator-only `Valid` methods; ask before adding complexity.
+
+## File ownership: justify new files
+
+Before creating a file, identify its concrete responsibility and inspect the natural existing owner/helper. Extend a fitting existing file when the change belongs there; do not split trivial forwarding/glue, duplicate helpers or create extra layers solely for appearance. A distinct domain/entrypoint, necessary test/fixture/migration or genuinely cohesive separation is a valid reason. Do not ban all new files, set numeric file/line quotas, omit tests or combine unrelated responsibilities just to minimize file count.
+
+During review, inspect every added file and compare its role with the target-base ownership pattern. Infer the rationale from code/task/approved boundaries; do not demand a per-file PR essay when the purpose is clear. Raise evidenced unexplained drift, duplication or fragmentation with a changed-code location and closest existing owner. Ask when a reason is genuinely unclear rather than assume that no reason exists. Renames/moves do not automatically represent new responsibilities.
+
 ## Route example: no unexplained per-feature body cap
 
 If comparable RPC routes use direct adapters:
@@ -40,4 +48,6 @@ This is **not a ban on MaxBytesHandler or request limits**. If comparable routes
 
 Review the final change beside its comparable examples. Test through the real mounted adapter/middleware path when routing, auth, validation or decoding behavior matters; test necessary field/error/limit boundaries without using production. Do not substitute a source-shape check for an executed API test. For a new exception, verify its concrete rationale and approval, not an imagined threat or a preferred style.
 
-Keep this authoring rule distinct from read-only review: do not reject another contributor's sound technique solely because it looks different, demand unrelated rewrites, or edit their code without authorization. Review correctness, explicit requirements and material risks pragmatically. This guidance also does not make internal pattern comparisons/provenance content for FE API handoffs or PR development diaries.
+Apply pattern and file-ownership checks during read-only review too; do not reject another contributor's sound technique solely because it looks different, but do not excuse an evidenced breach of confirmed local conventions as personal taste. Compare closest existing code, check new-file rationale and report unjustified deviation without inventing runtime defects. Preserve correctness/security and approved exceptions; do not demand unrelated style rewrites or edit/delete/reorganize reviewed files without authorization.
+
+This guidance does not make internal pattern comparisons/provenance content for FE API handoffs or PR development diaries.

@@ -14,6 +14,12 @@ Use these cases to evaluate skill behavior. A plan or dry-run is behavioral revi
 
 **Expected:** Inspect nearby routes, shared middleware and tests, then use the same direct adapter pattern. Do not uniquely add `http.MaxBytesHandler(..., 4096)`, a new interface/layer or a framework change as generic defensive cleanup. Keep existing global guards and required validation. If the peers instead use an approved common limit/wrapper, preserve that pattern. A necessary evidenced exception needs a focused explanation and approval unless already authorized, not blind copying of a known vulnerability or an unapproved whole-project cleanup.
 
+## Domain operations follow the layout and validator rules
+
+**Input:** Add `server.list` with optional `serverId`/`userId` UUID filters and `server.get` to an existing domain package. A draft puts params in `types.go`, adds single-use `buildFilter`/`scanRow` helpers, and validates with `if (p.ServerID != nil && *p.ServerID == uuid.Nil) || (p.UserID != nil && *p.UserID == uuid.Nil) { return invalid() }`.
+
+**Expected:** Keep everything in the domain file, with each operation's Params → `Valid` → Result → doc/Swagger → function block in that order. Inline the single-use filter as a local closure shared by the count and page queries, and scan inline. Write `Valid` as `v.Must(p.ServerID == nil || *p.ServerID != uuid.Nil, "serverId is invalid")` plus the matching `userId` rule, ending with `return v.Error()`. If the feature seems to need a new file, helper, layer, or dependency, ask the user with concrete options before writing it.
+
 ## 1. One named application
 
 **Prompt:** Create an inventory API at the specified path/module with an items feature and PostgreSQL. No other applications are requested.
