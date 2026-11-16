@@ -8,7 +8,7 @@ These are new-project defaults. In an existing project, inspect comparable mount
 
 Register method + path with httpmux and adapt typed functions through `arpc.Manager`. Use a shape such as `func Get(ctx context.Context, p *GetParams) (*GetResult, error)`, with JSON tags and `Valid() error` on request types.
 
-Use `validator.New()`, `v.Must(condition, "message")`, and `v.Error()`. Explicit validation in a domain function can support direct invocation; arpc v2.2.0 also validates requests before invocation by default. Keep validation idempotent and free of database writes or other side effects.
+Use `validator.New()`, `v.Must(condition, "message")`, and `v.Error()`; follow [domain function layout](domain-function-layout.md) for block order, single-use helpers, and validator-only `Valid` methods. Explicit validation in a domain function can support direct invocation; arpc v2.2.0 also validates requests before invocation by default. Keep validation idempotent and free of database writes or other side effects.
 
 Register endpoints with `mux.Handle("POST /item.get", am.Handler(item.Get))`. Use `POST /<resource>.<action>` as the RPC baseline. This is not JSON-RPC 2.0: the request body contains parameters directly, not a `jsonrpc`/`method`/`id` envelope.
 

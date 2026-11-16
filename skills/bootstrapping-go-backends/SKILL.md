@@ -28,6 +28,7 @@ Use Nick's selected structure and stack to build a repository capable of hosting
 | Every new project | [Stack](references/stack.md), [Architecture](references/architecture.md) |
 | Any code change in an existing project | [Existing-project coding patterns](../initializing-agent-teams/references/existing-project-patterns.md) |
 | HTTP endpoints, validation, auth, errors, or lists | [API contracts](references/api-contracts.md) |
+| Any new/changed domain operation, Params/Valid/Result type | [Domain function layout](references/domain-function-layout.md) |
 | Every browsable list or pagination change | [Pagination and sorting](references/pagination-and-sorting.md) |
 | SQL, migrations, transactions, or DB fixtures | [Database and testing](references/database-and-testing.md) |
 | Application lifecycle, jobs, scheduling, Swagger, or containers | [Runtime and delivery](references/runtime-and-delivery.md) |
@@ -61,6 +62,8 @@ Wire each application's actual config, database dependencies, migration role, mi
 ### 4. Complete a vertical slice
 
 Implement a small feature relevant to the requested application: typed inputs/results, validation and authorization, operation/query, route or job registration, schema when necessary, tests, and the applicable contract documentation. Avoid ceremonial controller/service/repository/interface layers without a real responsibility.
+
+Follow the [domain function layout](references/domain-function-layout.md) rules for every new/changed operation: **Params, Valid, and Result directly above their operation** in the domain's own file; no single-use helper functions or extra files; ask the user before adding complexity; and write `Valid` only with `v.Must`/`v.Mustf`/`v.Add`, ending in `return v.Error()`, never hand-written `if ... { return invalid() }` checks.
 
 For the pgsql baseline, use **pgctx for simple fixed SQL and pgstmt for complex/dynamic queries**. Do not hand-assemble dynamic SQL with string concatenation, `fmt.Sprintf`, `strings.Builder`, manual condition fragments or placeholder counters. Bind runtime values, allowlist identifiers/sort directions and preserve the current context/transaction. Follow [query construction](references/database-and-testing.md#query-construction); this explicit rule applies to new/changed queries even if older code concatenates SQL, not as permission to rewrite unrelated queries or switch an existing project's DB stack.
 

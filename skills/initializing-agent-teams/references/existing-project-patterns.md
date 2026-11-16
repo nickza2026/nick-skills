@@ -10,6 +10,8 @@ Use existing helpers and shared boundaries. Do not add feature-specific wrappers
 
 For the Go pgsql baseline, the explicit [query construction convention](../../bootstrapping-go-backends/references/database-and-testing.md#query-construction) is pgctx for simple fixed SQL and pgstmt for complex/dynamic queries, not manual SQL concatenation. Apply it to new/changed queries even when older code concatenates SQL; preserve other local patterns and semantics rather than rewriting unrelated queries or migrating another DB stack.
 
+The [domain function layout](../../bootstrapping-go-backends/references/domain-function-layout.md) rules are likewise explicit for new/changed operations: Params, Valid, and Result directly above the operation; no single-use helpers or extra files; validator-only `Valid` methods; ask before adding complexity.
+
 ## File ownership: justify new files
 
 Before creating a file, identify its concrete responsibility and inspect the natural existing owner/helper. Extend a fitting existing file when the change belongs there; do not split trivial forwarding/glue, duplicate helpers or create extra layers solely for appearance. A distinct domain/entrypoint, necessary test/fixture/migration or genuinely cohesive separation is a valid reason. Do not ban all new files, set numeric file/line quotas, omit tests or combine unrelated responsibilities just to minimize file count.
