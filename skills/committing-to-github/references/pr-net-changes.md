@@ -2,6 +2,8 @@
 
 Apply these rules to PR titles/descriptions and summary/progress comments, including updates to an existing PR. Keep them factual, concise and about the final deliverable relative to the actual target branch. Do not narrate experiments, rejected designs, draft endpoints, temporary files, reverted edits or the sequence of commits unless specifically asked about that history.
 
+Apply [public wording and authorship](git-safety.md#public-wording-and-authorship) as well: no unsolicited AI/harness/model/provider signatures or generated-by footers. Keep actual change/test facts and necessary product names, not authorship claims or tooling provenance.
+
 ## Establish the comparison
 
 1. Verify the PR's actual target branch/base SHA and final head SHA. Usually the base is main, but never substitute main when the PR targets another branch. Missing/stale base data is a verification gap, not permission to guess removal or compatibility claims.

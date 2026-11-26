@@ -74,10 +74,10 @@ test('new files need a concrete responsibility and a check against the existing 
 });
 test('unjustified local drift and duplicate helpers are findings without invented runtime defects', () => {
   assert.ok(flow.includes('Treat a demonstrated breach of confirmed local conventions'));
-  assert.ok(flow.includes('requirement/maintainability finding'));
+  assert.ok(flow.includes('not a merge blocker on convention alone'));
   assert.ok(calibration.includes('three forwarding/helper files'));
   assert.ok(calibration.includes('new helper/file duplicates an existing owner'));
-  assert.ok(reporting.includes('without presenting them as invented runtime defects'));
+  assert.ok(reporting.includes('never invent runtime defects to elevate a pattern or coverage concern'));
 });
 test('justified new domains, tests, migrations and cohesive separation remain valid', () => {
   for (const required of ['distinct domain/application boundary', 'required regression/fixture', 'necessary migration', 'evidenced cohesive separation']) assert.ok(flow.includes(required), required);
@@ -109,4 +109,54 @@ test('review checks reuse English bundled guidance without relaxing verification
     assert.doesNotMatch(text, /[\u0e00-\u0e7f]|\uFFFD/);
     assert.ok(text.endsWith('\n'));
   }
+});
+
+test('review uses four action dispositions separate from severity and confidence', () => {
+  for (const label of ['Must fix', 'Recommend fix', 'Recommend test', 'Team review']) {
+    assert.ok(review.includes(label), label);
+    assert.ok(reporting.includes(`[${label}]`), label);
+  }
+  assert.ok(reporting.includes('separate axes'));
+  assert.ok(reporting.includes('Do not use a severity score alone to communicate merge blocking'));
+});
+test('correct pattern-only differences and unnecessary files are nonblocking recommendations', () => {
+  assert.ok(reporting.includes('use Recommend fix regardless of whether the convention is established'));
+  assert.ok(rules.includes('a coding convention alone does not make it a merge blocker'));
+  assert.ok(calibration.includes('With correct behavior, cite the peer/helper and classify Recommend fix'));
+  assert.ok(reporting.includes('This item alone does not block merge'));
+});
+test('coverage gaps use Recommend test without inferring a nonexistent correctness failure', () => {
+  assert.ok(reporting.includes('Missing coverage is Recommend test, not a correctness failure by itself'));
+  assert.ok(reporting.includes('exact uncovered scenario, expected assertions'));
+  assert.ok(calibration.includes('Correct-looking pagination lacks empty-page and invalid-cursor cases'));
+  assert.ok(reporting.includes('without duplicating the same defect as another blocker'));
+});
+test('executed failing tests and broken test compilation are Must fix rather than coverage advice', () => {
+  assert.ok(review.includes('Executed failing tests, including broken test compilation, are **Must fix**'));
+  assert.ok(reporting.includes('An executed failing test is Must fix even if production behavior is not yet proven wrong'));
+  assert.ok(reporting.includes('do not downgrade a known failing test to a recommendation'));
+  assert.ok(reporting.includes('without weakening assertions'));
+});
+test('blocked or unrun execution is disclosed without invented test failure or false pass', () => {
+  assert.ok(reporting.includes('blocked verification, not an invented assertion failure'));
+  assert.ok(reporting.includes('Record pre-existing/unknown origin honestly'));
+  assert.ok(flow.includes('Permissions/environment that prevent meaningful execution are blocked/unrun verification'));
+  assert.ok(reporting.includes('do not claim a reproduction was run') || reporting.includes('Do not claim a reproduction was run'));
+});
+test('Team review identifies an owner, question, options and explicit decision timing', () => {
+  assert.ok(reporting.includes('decision owner by role'));
+  assert.ok(reporting.includes('options/trade-offs and missing facts'));
+  assert.ok(reporting.includes('decision before merge'));
+  assert.ok(reporting.includes('follow-up decision'));
+  assert.ok(calibration.includes('whether cancellation refunds immediately or only after provider confirmation'));
+});
+test('rare PostgreSQL bounds are evidence-based without demoting reachable overflow or money errors', () => {
+  for (const required of ['2,147,483,647', 'Values outside the range are rejected', 'actual column/sequence limits', 'do not access production', 'Do not mechanically change every', 'current contract admits 3,000,000,000', 'Must fix even if uncommon']) assert.ok(calibration.includes(required), required);
+  assert.ok(reporting.includes('Rare does not excuse a supported harmful path'));
+});
+test('classification grants neither merge approval nor waiver of verification or posting authority', () => {
+  assert.ok(review.includes('no Must fix items does not mean unconditional approval'));
+  assert.ok(reporting.includes('Do not auto-submit a GitHub review'));
+  assert.ok(reporting.includes('posting remains separately authorized'));
+  assert.ok(reporting.includes('Preserve independently required CI/verification gates'));
 });

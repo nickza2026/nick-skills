@@ -35,6 +35,12 @@ test('all adapters enforce reviewer pattern continuity and reasoned file ownersh
     const verification = plan.files.find(file => file.relative.includes('nick-verifier.')).content;
     assert.ok(implementation.includes('Before creating a file, establish a concrete responsibility'), harness);
     for (const required of ['closest target-base patterns', 'inspect every added file', 'Report unjustified pattern drift', 'changed/base evidence', 'unclear rationale is a question', 'Do not edit implementation']) assert.ok(verification.includes(required), `${harness}: ${required}`);
+    for (const role of ['verifier', 'db-reviewer', 'security-reviewer']) {
+      const content = plan.files.find(file => file.relative.includes(`nick-${role}.`)).content;
+      for (const label of ['Must fix', 'Recommend fix', 'Recommend test', 'Team review']) assert.ok(content.includes(label), `${harness}/${role}: ${label}`);
+      assert.ok(content.includes('executed failing tests'), `${harness}/${role}: failures are Must fix`);
+      assert.ok(content.includes('decision owner'), `${harness}/${role}: team decision owner`);
+    }
   }
 }));
 
@@ -70,6 +76,7 @@ test('all adapters carry net-only PR summaries while preserving all-history cred
     const plan = makePlan(options(root, harness));
     const publication = plan.files.find(file => file.relative.includes('nick-git-publisher.')).content;
     for (const required of ['final net changes against the verified target base', 'PR summary comments/updates', 'never call add-then-remove a base removal', 'every outgoing commit', 'verify mounted behavior before claiming HTTP 404']) assert.ok(publication.includes(required), `${harness}: ${required}`);
+    for (const required of ['natural factual prose without unsolicited AI/harness/model/provider attribution', 'generated-by footers', 'real human credit and legal notices', 'never invent human authorship', 'Check mandatory attribution conflicts before committing/posting', 'stop and disclose unresolved conflicts']) assert.ok(publication.includes(required), `${harness}: ${required}`);
   }
 }));
 
